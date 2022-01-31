@@ -2,15 +2,19 @@
   "name": "cardapio_app_server",
   "version": "1.0.0",
   "description": "Backend do cardapio_app",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
+    "start": "ts-node src/server.ts",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Otavio Henrique",
   "keywords": [
     "Typescript",
     "Javascript",
-    "Nodejs"
+    "Nodejs",
+    "TypeORM"
   ],
   "license": "ISC",
   "dependencies": {
