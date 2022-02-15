@@ -1,4 +1,4 @@
-import Refeicao from "../entities/Refeicao";
+import Refeicao from "../entity/Refeicao";
 
 export default {
   render(refeicao: Refeicao) {

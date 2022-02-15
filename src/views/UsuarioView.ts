@@ -1,4 +1,4 @@
-import Usuario from "../entities/Usuario";
+import Usuario from "../entity/Usuario";
 
 export default {
   render(usuario: Usuario) {
