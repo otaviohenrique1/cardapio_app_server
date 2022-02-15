@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as Yup from "yup";
-import Usuario from "../entities/Usuario";
+import Usuario from "../entity/Usuario";
 import usuarioView from "../views/UsuarioView";
 
 export default {

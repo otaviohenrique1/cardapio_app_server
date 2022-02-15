@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as Yup from "yup";
-import Refeicao from "../entities/Refeicao";
+import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
 
 export default {
@@ -17,14 +17,15 @@ export default {
     return response.json(refeicaoView.render(refeicao));
   },
   async create(request: Request, response: Response) {
-    const { nome, preco, ingredientes, ativo, data_cadastro } = request.body;
+    const { nome, preco, ingredientes, ativo, id_usuario, data_cadastro } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
-    const data = { nome, preco, ingredientes, ativo, data_cadastro };
+    const data = { nome, preco, ingredientes, ativo, id_usuario, data_cadastro };
     const schema = Yup.object().shape({
       nome: Yup.string().required('Campo vazio'),
       preco: Yup.number().required('Campo vazio'),
       ingredientes: Yup.string().required('Campo vazio'),
       ativo: Yup.boolean().required('Campo vazio'),
+      id_usuario: Yup.number().required('Campo vazio'),
       data_cadastro: Yup.date().required('Campo vazio'),
     });
     await schema.validate(data, { abortEarly: false });
