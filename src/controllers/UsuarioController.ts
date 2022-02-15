@@ -5,6 +5,31 @@ import Usuario from "../entity/Usuario";
 import usuarioView from "../views/UsuarioView";
 
 export default {
+  async login(request: Request, response: Response) {
+    const { email, senha } = request.body;
+    let existingUser: any;
+    const usuarioRepository = getRepository(Usuario);
+    try {
+      existingUser = await usuarioRepository.findOne({ email: email });
+    } catch (error) {
+      const mensagemErro = "Login falhou, tente novamente mais tarde";
+      return response.status(500).json({ message: mensagemErro });
+    }
+    if (!existingUser || existingUser.senha !== senha) {
+      const mensagemErro = "Senha invalida";
+      return response.status(401).json({ message: mensagemErro });
+    }
+    if (!existingUser || existingUser.email !== email) {
+      const mensagemErro = "Email invalido";
+      return response.status(401).json({ message: mensagemErro });
+    }
+    let data_user = {
+      id: existingUser.id,
+      nome: existingUser.nome,
+      email: existingUser.email,
+    };
+    return response.status(200).json({ message: "Logado com sucesso!", data_user });
+  },
   async index(request: Request, response: Response) {
     const veiculoRepository = getRepository(Usuario);
     const veiculo = await veiculoRepository.find();

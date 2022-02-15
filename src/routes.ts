@@ -9,6 +9,7 @@ routes.get('/usuario/:id', usuarioController.show);
 routes.post('/usuario', usuarioController.create);
 routes.put('/usuario/:id', usuarioController.update);
 routes.delete('/usuario/:id', usuarioController.delete);
+routes.post('/usuarios/login', usuarioController.login);
 
 routes.get('/refeicao', refeicaoController.index);
 routes.get('/refeicao/:id', refeicaoController.show);
