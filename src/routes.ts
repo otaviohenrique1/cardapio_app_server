@@ -1,6 +1,7 @@
 import { Router } from "express";
 import usuarioController from "./controllers/UsuarioController";
 import refeicaoController from "./controllers/RefeicaoController";
+import multer from "multer";
 
 const routes = Router();
 
