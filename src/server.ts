@@ -14,3 +14,10 @@ app.use(routes);
 app.use(errorHandler);
 
 app.listen(3333, () => console.log("Express iniciado..."));
+
+/*
+  colocar no form para que o multer consiga processar -> enctype="multipart/form-data"
+  <form action="/profile" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" />
+  </form>
+*/
