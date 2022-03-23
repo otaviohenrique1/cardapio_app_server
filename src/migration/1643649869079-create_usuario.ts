@@ -15,18 +15,32 @@ export class createUsuario1643649869079 implements MigrationInterface {
         },
         {
           name: 'nome',
-          type: 'varchar'
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
         },
         {
           name: 'email',
-          type: 'varchar'
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
         },
         {
           name: 'senha',
           type: 'varchar'
         },
         {
+          name: 'codigo',
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
+        },
+        {
           name: 'data_cadastro',
+          type: 'datetime'
+        },
+        {
+          name: 'data_modificacao_cadastro',
           type: 'datetime'
         },
       ],
