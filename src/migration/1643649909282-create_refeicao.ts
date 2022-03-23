@@ -15,56 +15,29 @@ export class createRefeicao1643649909282 implements MigrationInterface {
         },
         {
           name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
+          type: 'varchar'
         },
         {
           name: 'preco',
-          type: 'decimal',
-          isNullable: false,
-          precision: 10,
-          scale: 2,
+          type: 'decimal'
         },
         {
           name: 'ingredientes',
           type: 'varchar',
-          isNullable: false,
         },
         {
           name: 'ativo',
           type: 'boolean',
-          isNullable: false,
-        },
-        {
-          name: 'codigo',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
         },
         {
           name: 'data_cadastro',
-          type: 'datetime',
-        },
-        {
-          name: 'data_modificacao_cadastro',
-          type: 'datetime',
+          type: 'datetime'
         },
         {
           name: 'id_usuario',
-          type: 'integer',
+          type: 'integer'
         },
       ],
-      foreignKeys: [
-        {
-          name: 'refeicao',
-          columnNames: ['id_usuario'],
-          referencedTableName:'usuario',
-          referencedColumnNames: ['id'],
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-        }
-      ]
     }));
   }
 

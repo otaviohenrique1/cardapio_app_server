@@ -1,33 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
-import { DadosBase } from "./DadosBase";
-import { Imagem } from "./Imagem";
-import Usuario from "./Usuario";
-
-@Entity('refeicao')
-export default class Refeicao extends DadosBase {
-  @Column()
-  preco: number;
-
-  @Column()
-  ingredientes: string;
-
-  @Column()
-  ativo: boolean;
-
-  @OneToMany(() => Imagem, imagem => imagem.refeicao, {
-    cascade: ['insert', 'update']
-  })
-  @JoinColumn({ name: 'refeicao_id' })
-  imagens: Imagem[];
-
-  @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
-  @JoinColumn({ name: 'refeicoes' })
-  id_usuario: number;
-}
-
-/*
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import Usuario from "./Usuario";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity('refeicao')
 export default class Refeicao {
@@ -47,16 +18,9 @@ export default class Refeicao {
   ativo: boolean;
 
   @Column()
-  codigo: string;
-  
-  @Column()
   data_cadastro: Date;
 
+  // Colocar como chave estangeira
   @Column()
-  data_modificacao_cadastro: Date;
-
-  @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
-  @JoinColumn({ name: 'refeicoes' })
   id_usuario: number;
 }
-*/
