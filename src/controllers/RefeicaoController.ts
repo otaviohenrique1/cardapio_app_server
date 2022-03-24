@@ -31,11 +31,11 @@ export default {
       ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
       ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
       codigo: Yup.string().required(MensagemCampoVazio('codigo')),
-      data_cadastro: Yup.date().required('Campo vazio'),
-      data_modificacao_cadastro: Yup.date().required('Campo vazio'),
+      data_cadastro: Yup.date().required(MensagemCampoVazio('data_cadastro')),
+      data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
       imagem: Yup.array(
         Yup.object().shape({
-          path: Yup.string().required('Campo vazio')
+          path: Yup.string().required(MensagemCampoVazio('path'))
         })
       )
     });

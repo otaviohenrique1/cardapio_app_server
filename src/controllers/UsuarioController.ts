@@ -51,8 +51,8 @@ export default {
       email: Yup.string().email(EMAIL_INVALIDO).required(MensagemCampoVazio('email')),
       senha: Yup.string().required(MensagemCampoVazio('senha')),
       codigo: Yup.string().required(MensagemCampoVazio('codigo')),
-      data_cadastro: Yup.date().required('Campo vazio'),
-      data_modificacao_cadastro: Yup.date().required('Campo vazio'),
+      data_cadastro: Yup.date().required(MensagemCampoVazio('data_cadastro')),
+      data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
     });
     await schema.validate(data, { abortEarly: false });
     const usuario = usuarioRepository.create(data);
