@@ -8,6 +8,7 @@ export default {
       nome: refeicao.nome,
       preco: refeicao.preco,
       ingredientes: refeicao.ingredientes,
+      descricao: refeicao.descricao,
       ativo: refeicao.ativo,
       codigo: refeicao.codigo,
       data_cadastro: refeicao.data_cadastro,

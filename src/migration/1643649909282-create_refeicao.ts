@@ -28,7 +28,12 @@ export class createRefeicao1643649909282 implements MigrationInterface {
         },
         {
           name: 'ingredientes',
-          type: 'varchar',
+          type: 'text',
+          isNullable: false,
+        },
+        {
+          name: 'descricao',
+          type: 'text',
           isNullable: false,
         },
         {

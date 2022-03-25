@@ -12,6 +12,9 @@ export default class Refeicao extends DadosBase {
   ingredientes: string;
 
   @Column()
+  descricao: string;
+
+  @Column()
   ativo: boolean;
 
   @OneToMany(() => Imagem, imagem => imagem.refeicao, {

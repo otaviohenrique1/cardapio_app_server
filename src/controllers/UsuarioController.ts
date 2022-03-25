@@ -66,13 +66,14 @@ export default {
     return response.status(200).json(usuario);
   },
   async update(request: Request, response: Response, next: NextFunction) {
-    const { id, nome, email, senha } = request.body;
+    const { id, nome, email, senha, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
-    const data = { nome, email, senha };
+    const data = { nome, email, senha, data_modificacao_cadastro };
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       email: Yup.string().email(EMAIL_INVALIDO).required(MensagemCampoVazio('email')),
       senha: Yup.string().required(MensagemCampoVazio('senha')),
+      data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
     });
     await schema.validate(data, {
       abortEarly: false

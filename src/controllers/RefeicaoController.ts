@@ -18,22 +18,23 @@ export default {
     return response.json(refeicaoView.render(refeicao));
   },
   async create(request: Request, response: Response, next: NextFunction) {
-    const { nome, preco, ingredientes, ativo, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
+    const { nome, preco, ingredientes, descricao, ativo, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
     const requestImagens = request.files as Express.Multer.File[];
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
-    const data = { nome, preco, ingredientes, ativo, codigo, data_cadastro, data_modificacao_cadastro, imagens };
+    const data = { nome, preco, ingredientes, descricao, ativo, codigo, data_cadastro, data_modificacao_cadastro, imagens };
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       preco: Yup.number().required(MensagemCampoVazio('preco')),
       ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
+      descricao: Yup.string().required(MensagemCampoVazio('descricao')),
       ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
       codigo: Yup.string().required(MensagemCampoVazio('codigo')),
       data_cadastro: Yup.date().required(MensagemCampoVazio('data_cadastro')),
       data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
-      imagem: Yup.array(
+      imagens: Yup.array(
         Yup.object().shape({
           path: Yup.string().required(MensagemCampoVazio('path'))
         })
@@ -51,17 +52,18 @@ export default {
     return response.status(200).json(refeicao);
   },
   async update(request: Request, response: Response, next: NextFunction) {
-    const { id, nome, preco, ingredientes, ativo } = request.body;
+    const { id, nome, preco, ingredientes, descricao, ativo } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
     const requestImagens = request.files as Express.Multer.File[];
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
-    const data = { nome, preco, ingredientes, ativo, imagens };
+    const data = { nome, preco, ingredientes, ativo, descricao, imagens };
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       preco: Yup.number().required(MensagemCampoVazio('preco')),
       ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
+      descricao: Yup.string().required(MensagemCampoVazio('descricao')),
       ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
       imagem: Yup.array(
         Yup.object().shape({
