@@ -60,16 +60,6 @@ export class createRefeicao1643649909282 implements MigrationInterface {
           type: 'integer',
         },
       ],
-      foreignKeys: [
-        {
-          name: 'refeicao',
-          columnNames: ['id_usuario'],
-          referencedTableName:'usuario',
-          referencedColumnNames: ['id'],
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-        }
-      ]
     }));
   }
 

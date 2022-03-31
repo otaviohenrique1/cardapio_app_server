@@ -22,16 +22,6 @@ export class createImagem1648054225230 implements MigrationInterface {
           type: 'integer'
         },
       ],
-      foreignKeys: [
-        {
-          name: 'imagem',
-          columnNames: ['refeicao_id'],
-          referencedTableName: 'refeicao',
-          referencedColumnNames: ['id'],
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-        }
-      ],
     }))
   }
 
