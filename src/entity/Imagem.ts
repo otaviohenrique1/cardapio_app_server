@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Refeicao from "./Refeicao";
 
 @Entity('imagem')
@@ -10,6 +10,5 @@ export class Imagem {
   path: string;
 
   @ManyToOne(() => Refeicao, refeicao => refeicao.imagens)
-  @JoinColumn({ name: 'refeicao_id' })
   refeicao: Refeicao;
 }
