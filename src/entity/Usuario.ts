@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, Column, OneToMany } from "typeorm";
 import { DadosBase } from "./DadosBase";
 // import { JoinColumn } from "typeorm";
 import Refeicao from "./Refeicao";
@@ -11,8 +11,7 @@ export default class Usuario extends DadosBase {
   @Column()
   senha: string;
   
-  @OneToMany(() => Refeicao, (refeicao) => refeicao.id_usuario)
-  // @JoinColumn({ name: 'id_usuario' })
+  @OneToMany(() => Refeicao, (refeicao) => refeicao.usuario)
   refeicoes: Refeicao[];
 }
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { DadosBase } from "./DadosBase";
 import { Imagem } from "./Imagem";
 import Usuario from "./Usuario";
@@ -20,12 +20,10 @@ export default class Refeicao extends DadosBase {
   @OneToMany(() => Imagem, imagem => imagem.refeicao, {
     cascade: ['insert', 'update']
   })
-  @JoinColumn({ name: 'refeicao_id' })
   imagens: Imagem[];
 
   @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
-  @JoinColumn({ name: 'refeicoes' })
-  id_usuario: number;
+  usuario: Usuario;
 }
 
 /*
