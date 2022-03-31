@@ -16,8 +16,8 @@ routes.post('/usuario/login', usuarioController.login);
 
 routes.get('/refeicao', refeicaoController.index);
 routes.get('/refeicao/:id', refeicaoController.show);
-routes.post('/refeicao', upload.array('imagens'), refeicaoController.create);
-routes.put('/refeicao/:id', upload.array('imagens'), refeicaoController.update);
+routes.post('/refeicao', upload.array('imagem'), refeicaoController.create);
+routes.put('/refeicao/:id', upload.array('imagem'), refeicaoController.update);
 routes.delete('/refeicao/:id', refeicaoController.delete);
 
 export default routes;
