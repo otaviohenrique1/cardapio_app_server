@@ -6,9 +6,15 @@ import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
 
 export default {
+  /**
+   * Listar todas as refeicoes cadastradas pelo usuario
+   */
   async index(request: Request, response: Response, next: NextFunction) {
     const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.find({ relations: ['imagens'] });
+    const refeicao = await refeicaoRepository.find({
+      // where: { id:  },
+      relations: ['imagens']
+    });
     return response.json(refeicaoView.renderMany(refeicao));
   },
   async show(request: Request, response: Response, next: NextFunction) {
@@ -67,7 +73,7 @@ export default {
       ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
       imagem: Yup.array(
         Yup.object().shape({
-          path: Yup.string().required('Campo vazio')
+          path: Yup.string().required(MensagemCampoVazio('path'))
         })
       )
     });
