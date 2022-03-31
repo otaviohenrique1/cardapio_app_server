@@ -6,7 +6,12 @@ import fs from "fs";
 
 export default {
   storage: multer.diskStorage({
-    destination: path.join(__dirname, '..', '..', 'uploads', 'fotos'),
+    destination: function (request, file, cb) {
+      const { id, codigo } = request.body
+      const fileDestination2 = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${id}_${codigo}`);
+      // const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
+      cb(null, fileDestination2);
+    },
     filename: (request, file, cb) => {
       // const { id, codigo } = request.body
 
