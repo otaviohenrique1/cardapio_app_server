@@ -2,7 +2,7 @@
 import multer from "multer";
 import path from "path";
 import crypto from 'crypto';
-import fs from "fs";
+// import fs from "fs";
 // import { slug } from "./utils";
 
 /* arrumar parte do nome do arquivo */
@@ -11,7 +11,7 @@ export default {
     destination: function (request, file, cb) {
       const { id, codigo } = request.body
       const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${codigo}_${id}`);
-      fs.mkdirSync(fileDestination, { recursive: true })
+      // fs.mkdirSync(fileDestination, { recursive: true })
       // const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
       cb(null, fileDestination);
     },
