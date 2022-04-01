@@ -13,7 +13,7 @@ export default {
       codigo: refeicao.codigo,
       data_cadastro: refeicao.data_cadastro,
       data_modificacao_cadastro: refeicao.data_modificacao_cadastro,
-      id_usuario: refeicao.usuario.id,
+      usuario: refeicao.usuario,
       imagens: ImagemView.renderMany(refeicao.imagens),
     };
   },
