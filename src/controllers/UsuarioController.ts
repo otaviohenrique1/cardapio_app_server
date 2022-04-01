@@ -7,6 +7,9 @@ import Usuario from "../entity/Usuario";
 import usuarioView from "../views/UsuarioView";
 
 export default {
+  /**
+   * Busca e valida o login do usuario
+   */
   async login(request: Request, response: Response, next: NextFunction) {
     const { email, senha } = request.body;
     let existingUser: any;
@@ -25,23 +28,33 @@ export default {
       return response.status(401).json({ message: EMAIL_INVALIDO });
     }
     let data_user = {
-      id: existingUser.id,
+      // id: existingUser.id,
       nome: existingUser.nome,
       email: existingUser.email,
+      codigo: existingUser.codigo,
     };
     return response.status(200).json({ message: LOGADO_COM_SUCESSO, data_user });
   },
+  /**
+   * Listar todas os usuarios cadastrados
+   */
   async index(request: Request, response: Response, next: NextFunction) {
     const veiculoRepository = getRepository(Usuario);
     const veiculo = await veiculoRepository.find();
     return response.json(veiculo);
   },
+  /**
+   * Busca um usuario cadastrado usando o codigo do mesmo e exibe os seus dados
+   */
   async show(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
+    const { codigo } = request.params;
     const usuarioRepository = getRepository(Usuario);
-    const usuario = await usuarioRepository.findOneOrFail(id);
+    const usuario = await usuarioRepository.findOneOrFail(codigo);
     return response.json(usuarioView.render(usuario));
   },
+  /**
+   * Cadastra um usuario
+   */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
@@ -59,14 +72,20 @@ export default {
     await usuarioRepository.save(usuario);
     return response.status(201).json(usuario);
   },
+  /**
+   * Apaga um usuario, usando o codigo do mesmo
+   */
   async delete(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
+    const { codigo } = request.params;
     const UsuarioRepository = getRepository(Usuario);
-    const usuario = await UsuarioRepository.delete(id);
+    const usuario = await UsuarioRepository.delete(codigo);
     return response.status(200).json(usuario);
   },
+  /**
+   * Atualiza os dados de um usuario, usando o codigo do mesmo para busca-lo no banco de dados
+   */
   async update(request: Request, response: Response, next: NextFunction) {
-    const { id, nome, email, senha, data_modificacao_cadastro } = request.body;
+    const { codigo, nome, email, senha, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
     const data = { nome, email, senha, data_modificacao_cadastro };
     const schema = Yup.object().shape({
@@ -78,7 +97,7 @@ export default {
     await schema.validate(data, {
       abortEarly: false
     });
-    const usuario = await usuarioRepository.update(id, data);
+    const usuario = await usuarioRepository.update(codigo, data);
     return response.status(201).json(usuario);
   },
 };
