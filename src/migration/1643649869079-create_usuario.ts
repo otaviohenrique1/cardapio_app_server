@@ -27,7 +27,9 @@ export class createUsuario1643649869079 implements MigrationInterface {
         },
         {
           name: 'senha',
-          type: 'varchar'
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
         },
         {
           name: 'codigo',
