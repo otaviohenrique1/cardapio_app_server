@@ -7,22 +7,30 @@ import refeicaoView from "../views/RefeicaoView";
 
 export default {
   /**
-   * Listar todas as refeicoes cadastradas pelo usuario
+   * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
    */
   async index(request: Request, response: Response, next: NextFunction) {
+    const { codigo } = request.params;
+
     const refeicaoRepository = getRepository(Refeicao);
     const refeicao = await refeicaoRepository.find({
-      // where: { id:  },
+      where: { codigo: codigo },
       relations: ['imagens']
     });
     return response.json(refeicaoView.renderMany(refeicao));
   },
+  /**
+   * Busca uma refeicao cadastrada usando o codigo da mesma e exibe os seus dados
+   */
   async show(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
+    const { codigo } = request.params;
     const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens'] });
+    const refeicao = await refeicaoRepository.findOneOrFail(codigo, { relations: ['imagens'] });
     return response.json(refeicaoView.render(refeicao));
   },
+  /**
+   * Cadastrada uma refeicao
+   */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, preco, ingredientes, descricao, ativo, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
@@ -51,12 +59,18 @@ export default {
     await refeicaoRepository.save(refeicao);
     return response.status(201).json(refeicao);
   },
+  /**
+   * Apaga uma refeicao, usando o id da mesma
+   */
   async delete(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
     const refeicaoRepository = getRepository(Refeicao);
     const refeicao = await refeicaoRepository.delete(id);
     return response.status(200).json(refeicao);
   },
+  /**
+   * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
+   */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, preco, ingredientes, descricao, ativo } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
