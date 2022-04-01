@@ -39,9 +39,9 @@ export default {
    * Listar todas os usuarios cadastrados
    */
   async index(request: Request, response: Response, next: NextFunction) {
-    const veiculoRepository = getRepository(Usuario);
-    const veiculo = await veiculoRepository.find();
-    return response.json(veiculo);
+    const usuarioRepository = getRepository(Usuario);
+    const usuario = await usuarioRepository.find();
+    return response.json(usuario);
   },
   /**
    * Busca um usuario cadastrado usando o codigo do mesmo e exibe os seus dados
