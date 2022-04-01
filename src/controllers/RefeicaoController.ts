@@ -63,9 +63,9 @@ export default {
    * Apaga uma refeicao, usando o id da mesma
    */
   async delete(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
+    const { codigo } = request.params;
     const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.delete(id);
+    const refeicao = await refeicaoRepository.delete(codigo);
     return response.status(200).json(refeicao);
   },
   /**
