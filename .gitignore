@@ -4,3 +4,9 @@
 build/
 tmp/
 temp/
+uploads/fotos/*.jpg
+uploads/fotos/*.gif
+uploads/fotos/*.png
+uploads/perfil/*.jpg
+uploads/perfil/*.gif
+uploads/perfil/*.png
