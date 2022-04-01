@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, Column, ManyToOne, OneToMany } from "typeorm";
 import { DadosBase } from "./DadosBase";
 import { Imagem } from "./Imagem";
 import Usuario from "./Usuario";
