@@ -37,7 +37,7 @@ export class createPedido1648836927503 implements MigrationInterface {
           length: '255'
         },
         {
-          name: 'preco',
+          name: 'preco_pedido',
           type: 'decimal',
           isNullable: false,
           precision: 10,
