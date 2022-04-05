@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Generated } from "typeorm";
 
 export abstract class DadosBase {
   @PrimaryGeneratedColumn()
@@ -8,6 +8,7 @@ export abstract class DadosBase {
   nome: string;
 
   @Column()
+  @Generated('uuid')
   codigo: string;
 
   @Column()
