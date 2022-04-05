@@ -9,17 +9,17 @@ import crypto from 'crypto';
 export default {
   storage: multer.diskStorage({
     destination: function (request, file, cb) {
-      const { id, codigo } = request.body
-      const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${codigo}_${id}`);
+      const { id_usuario, codigo_usuario } = request.body
+      const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${codigo_usuario}_${id_usuario}`);
       // fs.mkdirSync(fileDestination, { recursive: true })
       // const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
       cb(null, fileDestination);
     },
     filename: (request, file, cb) => {
-      const { id, codigo } = request.body
+      const { id_usuario, codigo_usuario } = request.body
 
       const nomeDoArquivo = file.originalname;
-      const fileName = `${id}-${codigo}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${nomeDoArquivo}`;
+      const fileName = `${id_usuario}-${codigo_usuario}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${nomeDoArquivo}`;
       // const fileName = `${id}-${codigo}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${slug(nomeDoArquivo)}`;
       // const fileName = `${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${file.originalname}`;
       cb(null, fileName);
