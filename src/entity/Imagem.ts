@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Refeicao from "./Refeicao";
 
 @Entity('imagem')
-export class Imagem {
+export class Imagem extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
