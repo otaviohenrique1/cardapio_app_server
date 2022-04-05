@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
 
 export class createRefeicao1643649909282 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -44,8 +44,8 @@ export class createRefeicao1643649909282 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
+          isNullable: false,
+          length: '255'
         },
         {
           name: 'data_cadastro',
@@ -60,6 +60,18 @@ export class createRefeicao1643649909282 implements MigrationInterface {
           type: 'integer',
         },
       ],
+    }));
+    await queryRunner.dropColumn('refeicao', 'codigo');
+    await queryRunner.addColumn('refeicao', new TableColumn({
+      name: 'codigo',
+      type: 'varchar',
+      isGenerated: true,
+      generationStrategy: 'uuid'
+    }));
+    await queryRunner.addColumn('refeicao', new TableColumn({
+      name: 'descricao',
+      type: 'text',
+      isNullable: false,
     }));
   }
 

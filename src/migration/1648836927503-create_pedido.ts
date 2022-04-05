@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
 
 export class createPedido1648836927503 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -19,6 +19,24 @@ export class createPedido1648836927503 implements MigrationInterface {
           isNullable: false,
         },
         {
+          name: 'cliente_nome',
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
+        },
+        {
+          name: 'cliente_endereço',
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
+        },
+        {
+          name: 'cliente_telefone',
+          type: 'varchar',
+          isNullable: false,
+          length: '255'
+        },
+        {
           name: 'preco_pedido',
           type: 'decimal',
           isNullable: false,
@@ -28,8 +46,8 @@ export class createPedido1648836927503 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
+          isNullable: false,
+          length: '255'
         },
         {
           name: 'data_cadastro',
@@ -40,6 +58,16 @@ export class createPedido1648836927503 implements MigrationInterface {
           type: 'datetime'
         },
       ]
+    }));
+    await queryRunner.dropColumn('pedido', 'cliente_nome');
+    await queryRunner.dropColumn('pedido', 'cliente_endereço');
+    await queryRunner.dropColumn('pedido', 'cliente_telefone');
+    await queryRunner.dropColumn('pedido', 'codigo');
+    await queryRunner.addColumn('pedido', new TableColumn({
+      name: 'codigo',
+      type: 'varchar',
+      isGenerated: true,
+      generationStrategy: 'uuid'
     }));
   }
   public async down(queryRunner: QueryRunner): Promise<void> {
