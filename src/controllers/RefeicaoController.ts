@@ -45,7 +45,6 @@ export default {
       ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
       descricao: Yup.string().required(MensagemCampoVazio('descricao')),
       ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
-      codigo: Yup.string().required(MensagemCampoVazio('codigo')),
       data_cadastro: Yup.date().required(MensagemCampoVazio('data_cadastro')),
       data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
       imagens: Yup.array(
