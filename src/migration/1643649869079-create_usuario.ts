@@ -34,8 +34,8 @@ export class createUsuario1643649869079 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isNullable: false,
-          length: '255'
+          isGenerated: true,
+          generationStrategy: 'uuid'
         },
         {
           name: 'data_cadastro',

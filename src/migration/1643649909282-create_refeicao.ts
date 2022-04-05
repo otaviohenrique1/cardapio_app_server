@@ -44,8 +44,8 @@ export class createRefeicao1643649909282 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isNullable: false,
-          length: '255'
+          isGenerated: true,
+          generationStrategy: 'uuid'
         },
         {
           name: 'data_cadastro',
