@@ -19,24 +19,6 @@ export class createPedido1648836927503 implements MigrationInterface {
           isNullable: false,
         },
         {
-          name: 'cliente_nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cliente_endereço',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cliente_telefone',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
           name: 'preco_pedido',
           type: 'decimal',
           isNullable: false,
@@ -46,8 +28,8 @@ export class createPedido1648836927503 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isNullable: false,
-          length: '255'
+          isGenerated: true,
+          generationStrategy: 'uuid'
         },
         {
           name: 'data_cadastro',
@@ -61,5 +43,6 @@ export class createPedido1648836927503 implements MigrationInterface {
     }));
   }
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('pedido');
   }
 }
