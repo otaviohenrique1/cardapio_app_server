@@ -1,10 +1,24 @@
-import { Entity, Column, OneToMany } from "typeorm";
-import { DadosBase } from "./DadosBase";
-// import { JoinColumn } from "typeorm";
+import { Entity, Column, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import Refeicao from "./Refeicao";
 
 @Entity('usuario')
-export default class Usuario extends DadosBase {
+export default class Usuario extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  nome: string;
+
+  @Column()
+  @Generated('uuid')
+  codigo: string;
+
+  @Column()
+  data_cadastro: Date;
+
+  @Column()
+  data_modificacao_cadastro: Date;
+  
   @Column()
   email: string;
 
