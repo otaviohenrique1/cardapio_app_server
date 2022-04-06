@@ -32,11 +32,6 @@ export class createRefeicao1643649909282 implements MigrationInterface {
           isNullable: false,
         },
         {
-          name: 'descricao',
-          type: 'text',
-          isNullable: false,
-        },
-        {
           name: 'ativo',
           type: 'boolean',
           isNullable: false,

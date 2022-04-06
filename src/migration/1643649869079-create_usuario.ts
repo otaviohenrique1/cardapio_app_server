@@ -47,8 +47,8 @@ export class createUsuario1643649869079 implements MigrationInterface {
         },
       ],
     }));
-    await queryRunner.dropColumn('pedido', 'refeicao');
-    await queryRunner.addColumn('pedido', new TableColumn({
+    await queryRunner.dropColumn('usuario', 'codigo');
+    await queryRunner.addColumn('usuario', new TableColumn({
       name: 'codigo',
       type: 'varchar',
       isGenerated: true,
