@@ -2,6 +2,7 @@ import { Router } from "express";
 import usuarioController from "./controllers/UsuarioController";
 import refeicaoController from "./controllers/RefeicaoController";
 import pedidoController from "./controllers/PedidoController";
+import clienteController from "./controllers/ClienteController";
 import multer from "multer";
 import uploadConfig from "./config/uploads";
 
@@ -9,22 +10,27 @@ const routes = Router();
 const upload = multer(uploadConfig);
 
 routes.get('/usuario', usuarioController.index);
-routes.get('/usuario/:codigo', usuarioController.show);
+routes.get('/usuario/:id', usuarioController.show);
 routes.post('/usuario', usuarioController.create);
-routes.put('/usuario/:codigo', usuarioController.update);
-routes.delete('/usuario/:codigo', usuarioController.delete);
+routes.put('/usuario/:id', usuarioController.update);
+routes.delete('/usuario/:id', usuarioController.delete);
 routes.post('/usuario/login', usuarioController.login);
 
-routes.get('/refeicao/:codigo', refeicaoController.index);
-routes.get('/refeicao/:codigo', refeicaoController.show);
+routes.get('/refeicao/:id', refeicaoController.index);
+routes.get('/refeicao/:id', refeicaoController.show);
 routes.post('/refeicao', upload.array('imagem'), refeicaoController.create);
-routes.put('/refeicao/:codigo', upload.array('imagem'), refeicaoController.update);
-routes.delete('/refeicao/:codigo', refeicaoController.delete);
+routes.put('/refeicao/:id', upload.array('imagem'), refeicaoController.update);
+routes.delete('/refeicao/:id', refeicaoController.delete);
 
-routes.get('/pedido/:codigo', pedidoController.index);
-routes.get('/pedido/:codigo', pedidoController.show);
+routes.get('/pedido/:id', pedidoController.index);
+routes.get('/pedido/:id', pedidoController.show);
 routes.post('/pedido', pedidoController.create);
-routes.put('/pedido/:codigo', pedidoController.update);
-// routes.delete('/pedido/:codigo', pedidoController.delete);
+routes.put('/pedido/:id', pedidoController.update);
+// routes.delete('/pedido/:id', pedidoController.delete);
+
+routes.get('/cliente', clienteController.index);
+routes.get('/cliente/:id', clienteController.show);
+routes.post('/cliente', clienteController.create);
+routes.put('/cliente/:id', clienteController.update);
 
 export default routes;
