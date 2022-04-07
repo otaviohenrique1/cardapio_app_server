@@ -2,24 +2,30 @@
 import multer from "multer";
 import path from "path";
 import crypto from 'crypto';
-// import fs from "fs";
+import fs from "fs";
 // import { slug } from "./utils";
 
 /* arrumar parte do nome do arquivo */
 export default {
   storage: multer.diskStorage({
     destination: function (request, file, cb) {
-      const { id_usuario, codigo_usuario } = request.body
-      const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${codigo_usuario}_${id_usuario}`);
-      // fs.mkdirSync(fileDestination, { recursive: true })
+      const codigo_usuario = request.params.codigo_usuario;
+      console.log(request.params.codigo_usuario);
+      console.log(request.body.codigo_usuario);
+      
+      // const { codigo_usuario } = request.body
+      const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos', `${codigo_usuario}`);
+      // fs.mkdirSync(fileDestination)
+      fs.mkdirSync(fileDestination, { recursive: true })
       // const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
       cb(null, fileDestination);
     },
     filename: (request, file, cb) => {
-      const { id_usuario, codigo_usuario } = request.body
+      const codigo_usuario = request.params.codigo_usuario;
+      // const { codigo_usuario } = request.body
 
       const nomeDoArquivo = file.originalname;
-      const fileName = `${id_usuario}-${codigo_usuario}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${nomeDoArquivo}`;
+      const fileName = `${codigo_usuario}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${nomeDoArquivo}`;
       // const fileName = `${id}-${codigo}-${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${slug(nomeDoArquivo)}`;
       // const fileName = `${crypto.randomBytes(3).toString('hex')}-${Date.now()}-${file.originalname}`;
       cb(null, fileName);
