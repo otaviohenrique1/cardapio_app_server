@@ -5,6 +5,8 @@ import pedidoController from "./controllers/PedidoController";
 import clienteController from "./controllers/ClienteController";
 import multer from "multer";
 import uploadConfig from "./config/uploads";
+import passport from "passport";
+import session from "express-session";
 
 const routes = Router();
 const upload = multer(uploadConfig);
@@ -32,5 +34,8 @@ routes.get('/cliente', clienteController.index);
 routes.get('/cliente/:id', clienteController.show);
 routes.post('/cliente', clienteController.create);
 routes.put('/cliente/:id', clienteController.update);
+routes.post('/cliente/login', clienteController.login);
+// routes.post('/cliente/login2', passport.authenticate('local'));
+// routes.post('/cliente/login2', clienteController.login2);
 
 export default routes;
