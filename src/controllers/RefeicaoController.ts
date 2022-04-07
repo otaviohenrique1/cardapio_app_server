@@ -10,35 +10,36 @@ export default {
    * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
    */
   async index(request: Request, response: Response, next: NextFunction) {
-    const { codigo } = request.params;
+    const { id } = request.params;
 
     const refeicaoRepository = getRepository(Refeicao);
     const refeicao = await refeicaoRepository.find({
-      where: { codigo: codigo },
-      relations: ['imagens']
+      // join: {},
+      where: { usuario: {id: id} },
+      relations: ['imagens'],
     });
     return response.json(refeicaoView.renderMany(refeicao));
   },
   /**
-   * Busca uma refeicao cadastrada usando o codigo da mesma e exibe os seus dados
+   * Busca uma refeicao cadastrada usando o id da mesma e exibe os seus dados
    */
   async show(request: Request, response: Response, next: NextFunction) {
-    const { codigo } = request.params;
+    const { id } = request.params;
     const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.findOneOrFail(codigo, { relations: ['imagens'] });
+    const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens'] });
     return response.json(refeicaoView.render(refeicao));
   },
   /**
    * Cadastrada uma refeicao
    */
   async create(request: Request, response: Response, next: NextFunction) {
-    const { nome, preco, ingredientes, descricao, ativo, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
+    const { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
     const refeicaoRepository = getRepository(Refeicao);
     const requestImagens = request.files as Express.Multer.File[];
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
-    const data = { nome, preco, ingredientes, descricao, ativo, codigo, data_cadastro, data_modificacao_cadastro, imagens };
+    const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       preco: Yup.number().required(MensagemCampoVazio('preco')),
@@ -62,9 +63,9 @@ export default {
    * Apaga uma refeicao, usando o id da mesma
    */
   async delete(request: Request, response: Response, next: NextFunction) {
-    const { codigo } = request.params;
+    const { id } = request.params;
     const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.delete(codigo);
+    const refeicao = await refeicaoRepository.delete(id);
     return response.status(200).json(refeicao);
   },
   /**

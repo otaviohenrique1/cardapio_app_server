@@ -44,21 +44,22 @@ export default {
     return response.json(usuario);
   },
   /**
-   * Busca um usuario cadastrado usando o codigo do mesmo e exibe os seus dados
+   * Busca um usuario cadastrado usando o id do mesmo e exibe os seus dados
    */
   async show(request: Request, response: Response, next: NextFunction) {
-    const { codigo } = request.params;
+    const { id } = request.params;
     const usuarioRepository = getRepository(Usuario);
-    const usuario = await usuarioRepository.findOneOrFail(codigo);
+    const usuario = await usuarioRepository.findOneOrFail(id, { where: { id: id } });
     return response.json(usuarioView.render(usuario));
   },
   /**
    * Cadastra um usuario
    */
   async create(request: Request, response: Response, next: NextFunction) {
-    const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = request.body;
+    const { nome, email, senha, data_cadastro, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
-    const data = { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro };
+    const data = { nome, email, senha, data_cadastro, data_modificacao_cadastro };
+    console.log(data);
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       email: Yup.string().email(EMAIL_INVALIDO).required(MensagemCampoVazio('email')),
@@ -72,19 +73,19 @@ export default {
     return response.status(201).json(usuario);
   },
   /**
-   * Apaga um usuario, usando o codigo do mesmo
+   * Apaga um usuario, usando o id do mesmo
    */
   async delete(request: Request, response: Response, next: NextFunction) {
-    const { codigo } = request.params;
+    const { id } = request.params;
     const UsuarioRepository = getRepository(Usuario);
-    const usuario = await UsuarioRepository.delete(codigo);
+    const usuario = await UsuarioRepository.delete(id);
     return response.status(200).json(usuario);
   },
   /**
-   * Atualiza os dados de um usuario, usando o codigo do mesmo para busca-lo no banco de dados
+   * Atualiza os dados de um usuario, usando o id do mesmo para busca-lo no banco de dados
    */
   async update(request: Request, response: Response, next: NextFunction) {
-    const { codigo, nome, email, senha, data_modificacao_cadastro } = request.body;
+    const { id, nome, email, senha, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
     const data = { nome, email, senha, data_modificacao_cadastro };
     const schema = Yup.object().shape({
@@ -94,7 +95,7 @@ export default {
       data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
     });
     await schema.validate(data, { abortEarly: false });
-    const usuario = await usuarioRepository.update(codigo, data);
+    const usuario = await usuarioRepository.update(id, data);
     return response.status(201).json(usuario);
   },
 };
