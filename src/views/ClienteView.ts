@@ -11,6 +11,8 @@ export default {
       bairro: cliente.bairro,
       cidade: cliente.cidade,
       estado: cliente.estado,
+      email: cliente.email,
+      senha: cliente.senha,
       cep: cliente.cep,
       pedidos: cliente.pedidos,
       telefone: cliente.telefone,
