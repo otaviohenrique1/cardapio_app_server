@@ -11,7 +11,7 @@ const errorHandler: ErrorRequestHandler = (error, request, response, next) => {
 
     error.inner.forEach(err => {
       if (!err.path) { return; }
-      errors[err.path] = err.errors;
+      return errors[err.path] = err.errors;
     });
 
     return response.status(400).json({ message: 'Erro de validacao', errors });
