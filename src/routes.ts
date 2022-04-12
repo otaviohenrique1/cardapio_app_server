@@ -18,6 +18,7 @@ routes.put('/usuario/:id', usuarioController.update);
 routes.delete('/usuario/:id', usuarioController.delete);
 routes.post('/usuario/login', usuarioController.login);
 
+routes.get('/refeicao/cardapio', refeicaoController.index_catalogo_teste);
 routes.get('/refeicao/:id', refeicaoController.index);
 routes.get('/refeicao/:id', refeicaoController.show);
 routes.post('/refeicao', upload.array('imagem'), refeicaoController.create);
