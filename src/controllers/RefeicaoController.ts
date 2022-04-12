@@ -7,6 +7,14 @@ import refeicaoView from "../views/RefeicaoView";
 
 export default {
   /**
+   * Listar todas as refeicoes cadastradas (Rota de teste)
+   */
+   async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
+    const refeicaoRepository = getRepository(Refeicao);
+    const refeicao = await refeicaoRepository.find();
+    return response.json(refeicaoView.renderMany(refeicao));
+  },
+  /**
    * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
    */
   async index(request: Request, response: Response, next: NextFunction) {
