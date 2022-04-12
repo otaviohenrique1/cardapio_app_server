@@ -1,7 +1,7 @@
 import {BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { Pedido } from "./Pedido";
 
-@Entity()
+@Entity('cliente')
 export class Cliente extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
