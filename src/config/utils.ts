@@ -1,3 +1,8 @@
+/**
+ * Gera mensagem de erro.
+ * @param campo_nome Valor do tipo string
+ * @return Valor do tipo string
+ */
 export function MensagemCampoVazio(campo_nome: string): string {
   return `Campo ${campo_nome} vazio`;
 }
