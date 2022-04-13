@@ -42,12 +42,16 @@ export default {
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
+
     const refeicaoRepository = getRepository(Refeicao);
+    
     const requestImagens = request.files as Express.Multer.File[];
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
+    
     const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
+    
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       preco: Yup.number().required(MensagemCampoVazio('preco')),
