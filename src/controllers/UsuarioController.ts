@@ -59,7 +59,7 @@ export default {
     const { nome, email, senha, data_cadastro, data_modificacao_cadastro } = request.body;
     const usuarioRepository = getRepository(Usuario);
     const data = { nome, email, senha, data_cadastro, data_modificacao_cadastro };
-    console.log(data);
+
     const schema = Yup.object().shape({
       nome: Yup.string().required(MensagemCampoVazio('nome')),
       email: Yup.string().email(EMAIL_INVALIDO).required(MensagemCampoVazio('email')),
