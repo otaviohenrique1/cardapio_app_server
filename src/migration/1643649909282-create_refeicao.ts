@@ -51,7 +51,7 @@ export class createRefeicao1643649909282 implements MigrationInterface {
           type: 'datetime',
         },
         {
-          name: 'id_usuario',
+          name: 'usuario_id',
           type: 'integer',
         },
       ],
