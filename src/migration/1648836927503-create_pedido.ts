@@ -69,7 +69,15 @@ export class createPedido1648836927503 implements MigrationInterface {
       isGenerated: true,
       generationStrategy: 'uuid'
     }));
+    await queryRunner.addColumn('pedido', new TableColumn({
+      name: 'clienteId',
+      type: 'integer'
+    }));
+
+    /* Seeder - Retirar quando for para producao */
+    // await queryRunner.query("");
   }
+
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('pedido');
   }
