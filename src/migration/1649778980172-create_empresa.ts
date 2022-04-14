@@ -52,6 +52,9 @@ export class createEmpresa1649778980172 implements MigrationInterface {
         },
       ],
     }));
+
+    /* Seeder - Retirar quando for para producao */
+    // await queryRunner.query("");
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
