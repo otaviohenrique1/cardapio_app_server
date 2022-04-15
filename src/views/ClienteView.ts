@@ -1,23 +1,20 @@
 import { Cliente } from "../entity/Cliente";
+import PedidoView from "./PedidoView";
 
 export default {
   render(cliente: Cliente) {
+    const {
+      id, codigo, nome, rua, numero, bairro, cidade,
+      estado, email, senha, cep, telefone, pedidos,
+      data_cadastro, data_modificacao_cadastro
+    } = cliente;
+
+    const lista_pedidos = PedidoView.renderMany(pedidos);
+
     return {
-      id: cliente.id,
-      codigo: cliente.codigo,
-      nome: cliente.nome,
-      rua: cliente.rua,
-      numero: cliente.numero,
-      bairro: cliente.bairro,
-      cidade: cliente.cidade,
-      estado: cliente.estado,
-      email: cliente.email,
-      senha: cliente.senha,
-      cep: cliente.cep,
-      pedidos: cliente.pedidos,
-      telefone: cliente.telefone,
-      data_cadastro: cliente.data_cadastro,
-      data_modificacao_cadastro: cliente.data_modificacao_cadastro,
+      id, codigo, nome, rua, numero, bairro, cidade,
+      estado, email, senha, cep, pedidos: lista_pedidos,
+      telefone, data_cadastro, data_modificacao_cadastro,
     };
   },
 

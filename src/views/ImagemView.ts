@@ -1,14 +1,19 @@
+import { PORT } from "../utils/constantes";
 import { Imagem } from "../entity/Imagem";
+
 
 export default {
   render(imagem: Imagem) {
-    // const usuario_codigo = imagem.refeicao.usuario.codigo;
-    // const imagem_path = imagem.path;
+    const {
+      id, path
+    } = imagem;
+
+    const url = `http://192.168.0.12:${PORT}/uploads/fotos/${path}`;
+
     return {
-      id: imagem.id,
-      url: `http://192.168.0.12:3333/uploads/fotos/${imagem.path}`,
+      id, url
     };
-    // url: `http://192.168.0.12:3333/uploads/fotos/${usuario_codigo}/${imagem_path}`,
+    // url: `http://192.168.0.12:3333/uploads/fotos/${imagem_path}`,
     // url: `http://localhost:3333/uploads/${image.path}`,
   },
 

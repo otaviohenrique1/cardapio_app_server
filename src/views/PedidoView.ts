@@ -1,14 +1,20 @@
 import { Pedido } from "../entity/Pedido";
+import PedidoRefeicaoView from "./PedidoRefeicaoView";
 
 export default {
   render(pedido: Pedido) {
+    const {
+      id, codigo, preco_total, cliente, status_pedido,
+      lista_refeicoes, data_cadastro, data_modificacao_cadastro
+    } = pedido;
+
+    const pedido_lista_refeicoes = PedidoRefeicaoView
+      .renderMany(lista_refeicoes);
+
     return {
-      id: pedido.id,
-      codigo: pedido.codigo,
-      lista_refeicoes: pedido.lista_refeicoes,
-      status_pedido: pedido.status_pedido,
-      data_cadastro: pedido.data_cadastro,
-      data_modificacao_cadastro: pedido.data_modificacao_cadastro,
+      id, codigo, preco_total, cliente, status_pedido,
+      lista_refeicoes: pedido_lista_refeicoes,
+      data_cadastro, data_modificacao_cadastro,
     };
   },
 
