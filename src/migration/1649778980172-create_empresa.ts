@@ -1,7 +1,10 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
+import { Empresa } from "../entity/Empresa";
+import { empresa_seeder } from "../seeder/empresa_seeder";
 
 export class createEmpresa1649778980172 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('empresa', true);
     await queryRunner.createTable(new Table({
       name: 'empresa',
       columns: [
@@ -51,13 +54,21 @@ export class createEmpresa1649778980172 implements MigrationInterface {
           type: 'datetime'
         },
       ],
-    }));
+    }), true);
 
     /* Seeder - Retirar quando for para producao */
-    // await queryRunner.query("");
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Empresa)
+      .values(empresa_seeder)
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('empresa');
   }
 }
+
+/* Seeder - Retirar quando for para producao */
+// await queryRunner.query("");

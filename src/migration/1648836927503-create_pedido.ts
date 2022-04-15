@@ -1,7 +1,10 @@
-import { MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
+import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
+import { Pedido } from "../entity/Pedido";
+import { pedido_seeder } from "../seeder/pedido_seeder";
 
 export class createPedido1648836927503 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('pedido', true);
     await queryRunner.createTable(new Table({
       name: 'pedido',
       columns: [
@@ -19,24 +22,6 @@ export class createPedido1648836927503 implements MigrationInterface {
           isNullable: false,
         },
         {
-          name: 'cliente_nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cliente_endereço',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cliente_telefone',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
           name: 'preco_pedido',
           type: 'decimal',
           isNullable: false,
@@ -46,8 +31,8 @@ export class createPedido1648836927503 implements MigrationInterface {
         {
           name: 'codigo',
           type: 'varchar',
-          isNullable: false,
-          length: '255'
+          isGenerated: true,
+          generationStrategy: 'uuid'
         },
         {
           name: 'data_cadastro',
@@ -57,28 +42,26 @@ export class createPedido1648836927503 implements MigrationInterface {
           name: 'data_modificacao_cadastro',
           type: 'datetime'
         },
+        {
+          name: 'clienteId',
+          type: 'integer'
+        },
       ]
-    }));
-    await queryRunner.dropColumn('pedido', 'cliente_nome');
-    await queryRunner.dropColumn('pedido', 'cliente_endereço');
-    await queryRunner.dropColumn('pedido', 'cliente_telefone');
-    await queryRunner.dropColumn('pedido', 'codigo');
-    await queryRunner.addColumn('pedido', new TableColumn({
-      name: 'codigo',
-      type: 'varchar',
-      isGenerated: true,
-      generationStrategy: 'uuid'
-    }));
-    await queryRunner.addColumn('pedido', new TableColumn({
-      name: 'clienteId',
-      type: 'integer'
-    }));
+    }), true);
 
     /* Seeder - Retirar quando for para producao */
-    // await queryRunner.query("");
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Pedido)
+      .values(pedido_seeder)
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('pedido');
   }
 }
+
+/* Seeder - Retirar quando for para producao */
+// await queryRunner.query("");
