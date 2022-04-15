@@ -1,5 +1,6 @@
 import { Entity, Column, ManyToOne, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { Imagem } from "./Imagem";
+import { Ingrediente } from "./Ingrediente";
 import { Pedido } from "./Pedido";
 import Usuario from "./Usuario";
 
@@ -25,17 +26,17 @@ export default class Refeicao extends BaseEntity {
   preco: number;
 
   @Column()
-  ingredientes: string;
-
-  @Column()
   descricao: string;
 
   @Column()
   ativo: boolean;
 
+  // @Column()
+  // ingredientes: string;
+
   /* 1 refeicao com 1 ou mais imagens */
   @OneToMany(() => Imagem, imagem => imagem.refeicao, {
-    cascade: ['insert', 'update']
+    cascade: ['insert', 'update', 'remove']
   })
   imagens: Imagem[];
 
@@ -43,7 +44,9 @@ export default class Refeicao extends BaseEntity {
   @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
   usuario: Usuario;
 
-  /* muitas refeicoes em 1 pedido */
-  @ManyToOne(() => Pedido, pedido => pedido.refeicoes)
-  pedido: Pedido;
+  /* 1 refeicao com 1 ou mais ingredientes */
+  @OneToMany(() => Ingrediente, ingrediente => ingrediente.refeicao, {
+    cascade: ['insert', 'update', 'remove']
+  })
+  ingredientes: Ingrediente[];
 }

@@ -1,3 +1,6 @@
+import { Cliente } from "../entity/Cliente";
+import { gerador_seeder_insert } from "./gerador_seeder";
+
 export const cliente_1 = {
   id: 1,
   nome: 'Zeca',
@@ -35,3 +38,5 @@ export const cliente_2 = {
 export const cliente_seeder = [
   cliente_1, cliente_2
 ];
+
+export const cliente_seeder_data = gerador_seeder_insert(Cliente, cliente_seeder);

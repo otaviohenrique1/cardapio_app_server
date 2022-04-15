@@ -1,3 +1,6 @@
+import { Pedido } from "../entity/Pedido";
+import { gerador_seeder_insert } from "./gerador_seeder";
+
 export const pedido_1 = {
   id: 1,
   codigo: 'd55ce80a-c5c8-4ab1-8b70-195e62dfcc2c',
@@ -6,11 +9,10 @@ export const pedido_1 = {
   cliente: { id: 1 },
   status_pedido: "Entregue",
   preco_pedido: 57,
-  refeicoes: [
-    { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }
-  ]
 };
 
 export const pedido_seeder = [
   pedido_1
 ];
+
+export const cliente_seeder_data = gerador_seeder_insert(Pedido, pedido_seeder);

@@ -1,5 +1,7 @@
 import { v4 } from "uuid";
 import { randomBytes } from "crypto";
+import { EntityTarget, getConnection } from "typeorm";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 /**
  * Gera codigo usando uuid.v4
@@ -27,4 +29,23 @@ export function gera_nome_arquivo(nome_arquivo: string, extensao_arquivo: string
   let random_bytes = randomBytes(3).toString('hex')
   const resultado = `${random_bytes}-${date}-${nome_arquivo}.${extensao_arquivo}`;
   return resultado;
+}
+
+/* Seeder - Retirar quando for para producao */
+/**
+ * Insere os dados na tabela
+ * @param entityTarget Specifies INTO which entity's table insertion will be executed.
+ * @param values Values needs to be inserted into table.
+ * @returns Promise<InsertResult>
+ */
+export function gerador_seeder_insert<Entity>(
+  entityTarget: EntityTarget<Entity>,
+  values: QueryDeepPartialEntity<Entity> | QueryDeepPartialEntity<Entity>[]
+) {
+  return getConnection()
+    .createQueryBuilder()
+    .insert()
+    .into(entityTarget)
+    .values(values)
+    .execute();
 }

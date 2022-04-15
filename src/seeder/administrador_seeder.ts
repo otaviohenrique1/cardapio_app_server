@@ -1,3 +1,6 @@
+import { Administrador } from "../entity/Administrador";
+import { gerador_seeder_insert } from "./gerador_seeder";
+
 const administrador_1 = {
   id: 1,
   nome: 'Reginaldo',
@@ -11,3 +14,5 @@ const administrador_1 = {
 export const administrador_seeder = [
   administrador_1
 ];
+
+export const administrador_seeder_data = gerador_seeder_insert(Administrador, administrador_seeder);

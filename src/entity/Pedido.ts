@@ -1,6 +1,6 @@
-import { BaseEntity, Column, Entity, Generated, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Cliente } from "./Cliente";
-import Refeicao from "./Refeicao";
+import { PedidoRefeicao } from "./PedidoRefeicao";
 
 @Entity('pedido')
 export class Pedido extends BaseEntity {
@@ -11,24 +11,27 @@ export class Pedido extends BaseEntity {
   status_pedido: string;
 
   @Column()
-  preco_pedido: number;
-  
+  preco_total: number;
+
   @Column()
   @Generated('uuid')
   codigo: string;
-  
+
   @Column()
   data_cadastro: Date;
-  
+
   @Column()
   data_modificacao_cadastro: Date;
-
+  
   /* 1 pedido para 1 cliente */
-  @OneToOne(() => Cliente, cliente => cliente.pedido)
-  @JoinColumn()
+  @OneToMany(() => Cliente, cliente => cliente.pedidos, {
+    cascade: ['insert']
+  })
   cliente: Cliente;
 
   /* 1 pedido com 1 ou mais refeicoes */
-  @OneToMany(() => Refeicao, refeicao => refeicao.pedido)
-  refeicoes: Refeicao[];
+  @OneToMany(() => PedidoRefeicao, refeicao => refeicao.pedido_refeicao, {
+    cascade: ['insert']
+  })
+  lista_refeicoes: PedidoRefeicao[];
 }

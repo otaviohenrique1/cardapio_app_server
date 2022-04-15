@@ -1,3 +1,6 @@
+import { Imagem } from "../entity/Imagem";
+import { gerador_seeder_insert } from "./gerador_seeder";
+
 export const imagem_1_refeicao_1 = { id: 1, path: 'b3a397-1649275835960-a1.jpg', refeicao: { id: 1 } };
 export const imagem_2_refeicao_1 = { id: 2, path: 'c9df74-1649275835962-a1.jpg', refeicao: { id: 1 } };
 export const imagem_3_refeicao_1 = { id: 3, path: 'ff62b9-1649275835963-a1.jpg', refeicao: { id: 1 } };
@@ -43,3 +46,5 @@ export const imagem_seeder = [
   imagem_21_refeicao_7, imagem_22_refeicao_8, imagem_23_refeicao_8, imagem_24_refeicao_8,
   imagem_25_refeicao_9, imagem_26_refeicao_9, imagem_27_refeicao_9
 ];
+
+export const cliente_seeder_data = gerador_seeder_insert(Imagem, imagem_seeder);

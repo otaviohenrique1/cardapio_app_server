@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as Yup from "yup";
-import { MensagemCampoVazio } from "../config/utils";
+import { valida_ativo, valida_data_cadastro, valida_data_modificacao_cadastro, valida_descricao, valida_imagens, valida_ingredientes, valida_nome, valida_preco } from "../utils/SchemasValidacao";
 import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
 
@@ -9,9 +9,11 @@ export default {
   /**
    * Listar todas as refeicoes cadastradas (Rota de teste)
    */
-   async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
+  async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
     const refeicaoRepository = getRepository(Refeicao);
+
     const refeicao = await refeicaoRepository.find();
+
     return response.json(refeicaoView.renderMany(refeicao));
   },
   /**
@@ -21,11 +23,13 @@ export default {
     const { id } = request.params;
 
     const refeicaoRepository = getRepository(Refeicao);
+
     const refeicao = await refeicaoRepository.find({
       // join: {},
-      where: { usuario: {id: id} },
+      where: { usuario: { id: id } },
       relations: ['imagens'],
     });
+
     return response.json(refeicaoView.renderMany(refeicao));
   },
   /**
@@ -33,8 +37,11 @@ export default {
    */
   async show(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
+
     const refeicaoRepository = getRepository(Refeicao);
+
     const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens'] });
+
     return response.json(refeicaoView.render(refeicao));
   },
   /**
@@ -44,67 +51,86 @@ export default {
     const { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
 
     const refeicaoRepository = getRepository(Refeicao);
-    
+
     const requestImagens = request.files as Express.Multer.File[];
+
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
-    
+
     const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
-    
-    const schema = Yup.object().shape({
-      nome: Yup.string().required(MensagemCampoVazio('nome')),
-      preco: Yup.number().required(MensagemCampoVazio('preco')),
-      ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
-      descricao: Yup.string().required(MensagemCampoVazio('descricao')),
-      ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
-      data_cadastro: Yup.date().required(MensagemCampoVazio('data_cadastro')),
-      data_modificacao_cadastro: Yup.date().required(MensagemCampoVazio('data_modificacao_cadastro')),
-      imagens: Yup.array(
-        Yup.object().shape({
-          path: Yup.string().required(MensagemCampoVazio('path'))
-        })
-      )
-    });
+
+    const schema = Yup
+      .object()
+      .shape({
+        nome: valida_nome,
+        preco: valida_preco,
+        ingredientes: valida_ingredientes,
+        descricao: valida_descricao,
+        ativo: valida_ativo,
+        imagens: valida_imagens,
+        data_cadastro: valida_data_cadastro,
+        data_modificacao_cadastro: valida_data_modificacao_cadastro,
+      });
+
     await schema.validate(data, { abortEarly: false });
+
     const refeicao = refeicaoRepository.create(data);
+
     await refeicaoRepository.save(refeicao);
-    return response.status(201).json(refeicao);
+
+    return response
+      .status(201)
+      .json(refeicao);
   },
   /**
    * Apaga uma refeicao, usando o id da mesma
    */
   async delete(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
+
     const refeicaoRepository = getRepository(Refeicao);
+
     const refeicao = await refeicaoRepository.delete(id);
-    return response.status(200).json(refeicao);
+
+    return response
+      .status(200)
+      .json(refeicao);
   },
   /**
    * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, preco, ingredientes, descricao, ativo } = request.body;
+
     const refeicaoRepository = getRepository(Refeicao);
+
     const requestImagens = request.files as Express.Multer.File[];
+
     const imagens = requestImagens.map((imagem) => {
       return { path: imagem.filename };
     });
+
     const data = { nome, preco, ingredientes, ativo, descricao, imagens };
-    const schema = Yup.object().shape({
-      nome: Yup.string().required(MensagemCampoVazio('nome')),
-      preco: Yup.number().required(MensagemCampoVazio('preco')),
-      ingredientes: Yup.string().required(MensagemCampoVazio('ingredientes')),
-      descricao: Yup.string().required(MensagemCampoVazio('descricao')),
-      ativo: Yup.boolean().required(MensagemCampoVazio('ativo')),
-      imagem: Yup.array(
-        Yup.object().shape({
-          path: Yup.string().required(MensagemCampoVazio('path'))
-        })
-      )
-    });
+
+    const schema = Yup
+      .object()
+      .shape({
+        nome: valida_nome,
+        preco: valida_preco,
+        ingredientes: valida_ingredientes,
+        descricao: valida_descricao,
+        ativo: valida_ativo,
+        imagens: valida_imagens,
+        data_modificacao_cadastro: valida_data_modificacao_cadastro,
+      });
+
     await schema.validate(data, { abortEarly: false });
+
     const refeicao = await refeicaoRepository.update(id, data);
-    return response.status(201).json(refeicao);
+
+    return response
+      .status(201)
+      .json(refeicao);
   },
 };
