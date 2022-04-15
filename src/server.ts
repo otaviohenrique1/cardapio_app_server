@@ -5,7 +5,7 @@ import 'express-async-errors';
 import "./config/connection";
 import routes from "./routes";
 import errorHandler from "./errors/handler";
-import { PORT } from "./config/constantes";
+import { PORT } from "./utils/constantes";
 // import morgan from "morgan";
 
 const app = express();
