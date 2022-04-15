@@ -1,5 +1,6 @@
 import { Entity, Column, ManyToOne, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { Imagem } from "./Imagem";
+import { Pedido } from "./Pedido";
 import Usuario from "./Usuario";
 
 @Entity('refeicao')
@@ -32,11 +33,17 @@ export default class Refeicao extends BaseEntity {
   @Column()
   ativo: boolean;
 
+  /* 1 refeicao com 1 ou mais imagens */
   @OneToMany(() => Imagem, imagem => imagem.refeicao, {
     cascade: ['insert', 'update']
   })
   imagens: Imagem[];
 
+  /* muitas refeicoes cadastradas por 1 usuario  */
   @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
   usuario: Usuario;
+
+  /* muitas refeicoes em 1 pedido */
+  @ManyToOne(() => Pedido, pedido => pedido.refeicoes)
+  pedido: Pedido;
 }

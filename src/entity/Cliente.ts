@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, Generated, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import { Pedido } from "./Pedido";
 
 @Entity('cliente')
@@ -46,6 +46,7 @@ export class Cliente extends BaseEntity {
   @Column()
   senha: string;
 
-  @OneToMany(() => Pedido, pedido => pedido.cliente)
-  pedidos: Pedido[];
+  /* 1 pedido para 1 cliente */
+  @OneToOne(() => Pedido, pedido => pedido.cliente)
+  pedido: Pedido;
 }
