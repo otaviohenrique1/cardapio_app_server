@@ -26,8 +26,7 @@ routes.post('/usuario/login', usuarioController.login);
 /**
  * Rotas da refeicao
  */
-routes.get('/refeicao/cardapio', refeicaoController.index_catalogo_teste);
-routes.get('/refeicao/:id', refeicaoController.index);
+routes.get('/refeicao/cardapio/:id', refeicaoController.index);
 routes.get('/refeicao/:id', refeicaoController.show);
 routes.post('/refeicao', upload.array('imagem'), refeicaoController.create);
 routes.put('/refeicao/:id', upload.array('imagem'), refeicaoController.update);
