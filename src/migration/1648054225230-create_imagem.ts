@@ -1,31 +1,21 @@
 import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
 import { Imagem } from "../entity/Imagem";
 import { imagem_seeder } from "../seeder/imagem_seeder";
+import { coluna_path, coluna_primary_key, coluna_refeicaoId, if_table_not_exist } from "../utils/constantes_migration";
+
+const NOME_TABELA = 'imagem';
 
 export class createImagem1648054225230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('imagem', true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
-      name: 'imagem',
+      name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'path',
-          type: 'varchar'
-        },
-        {
-          name: 'refeicaoId',
-          type: 'integer'
-        },
+        coluna_primary_key,
+        coluna_path,
+        coluna_refeicaoId,
       ],
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
     await getConnection()
@@ -37,7 +27,7 @@ export class createImagem1648054225230 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('imagem');
+    await queryRunner.dropTable(NOME_TABELA);
   }
 }
 

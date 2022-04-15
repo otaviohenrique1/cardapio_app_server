@@ -1,60 +1,26 @@
 import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
 import { Empresa } from "../entity/Empresa";
 import { empresa_seeder } from "../seeder/empresa_seeder";
+import { coluna_nome, coluna_email, coluna_senha, coluna_status_cadastro, coluna_data_cadastro, coluna_data_modificacao_cadastro, if_table_not_exist, coluna_primary_key, coluna_codigo } from "../utils/constantes_migration";
+
+const NOME_TABELA = 'empresa';
 
 export class createEmpresa1649778980172 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('empresa', true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
-      name: 'empresa',
+      name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'email',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'senha',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'status_cadastro',
-          type: 'boolean',
-          isNullable: false,
-        },
-        {
-          name: 'codigo',
-          type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
-        },
-        {
-          name: 'data_cadastro',
-          type: 'datetime'
-        },
-        {
-          name: 'data_modificacao_cadastro',
-          type: 'datetime'
-        },
+        coluna_primary_key,
+        coluna_nome,
+        coluna_email,
+        coluna_senha,
+        coluna_status_cadastro,
+        coluna_codigo,
+        coluna_data_cadastro,
+        coluna_data_modificacao_cadastro,
       ],
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
     await getConnection()
@@ -66,9 +32,11 @@ export class createEmpresa1649778980172 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('empresa');
+    await queryRunner.dropTable(NOME_TABELA);
   }
 }
+
+
 
 /* Seeder - Retirar quando for para producao */
 // await queryRunner.query("");

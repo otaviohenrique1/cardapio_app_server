@@ -1,55 +1,25 @@
 import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
 import Usuario from "../entity/Usuario";
 import { usuario_seeder } from "../seeder/usuario_seeder";
+import { coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_email, coluna_nome, coluna_primary_key, coluna_senha, if_table_not_exist } from "../utils/constantes_migration";
+
+const NOME_TABELA = 'usuario';
 
 export class createUsuario1643649869079 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('usuario', true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
-      name: 'usuario',
+      name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'email',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'senha',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'codigo',
-          type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
-        },
-        {
-          name: 'data_cadastro',
-          type: 'datetime'
-        },
-        {
-          name: 'data_modificacao_cadastro',
-          type: 'datetime'
-        },
+        coluna_primary_key,
+        coluna_nome,
+        coluna_email,
+        coluna_senha,
+        coluna_codigo,
+        coluna_data_cadastro,
+        coluna_data_modificacao_cadastro,
       ],
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
     await getConnection()
@@ -61,7 +31,7 @@ export class createUsuario1643649869079 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('usuario');
+    await queryRunner.dropTable(NOME_TABELA);
   }
 }
 

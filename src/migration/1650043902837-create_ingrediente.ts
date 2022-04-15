@@ -1,38 +1,20 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { coluna_nome, coluna_primary_key, coluna_quantidade, coluna_refeicaoId, if_table_not_exist } from "../utils/constantes_migration";
 
 const NOME_TABELA = 'ingrediente';
 
 export class createIngrediente1650043902837 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable(NOME_TABELA, true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
       name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'quantidade',
-          type: 'integer',
-          isNullable: false,
-        },
-        {
-          name: 'refeicaoId',
-          type: 'integer'
-        },
+        coluna_primary_key,
+        coluna_nome,
+        coluna_quantidade,
+        coluna_refeicaoId,
       ],
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
     // await getConnection()

@@ -1,81 +1,39 @@
-import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
+import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
 import Refeicao from "../entity/Refeicao";
 import { refeicao_seeder } from "../seeder/refeicao_seeder";
+import { coluna_ativo, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_descricao, coluna_nome, coluna_preco, coluna_primary_key, coluna_usuarioId, if_table_not_exist } from "../utils/constantes_migration";
+
+const NOME_TABELA = 'refeicao';
 
 export class createRefeicao1643649909282 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('refeicao', true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
-      name: 'refeicao',
+      name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'preco',
-          type: 'decimal',
-          isNullable: false,
-          precision: 10,
-          scale: 2,
-        },
-        {
-          name: 'ingredientes',
-          type: 'text',
-          isNullable: false,
-        },
-        {
-          name: 'ativo',
-          type: 'boolean',
-          isNullable: false,
-        },
-        {
-          name: 'codigo',
-          type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
-        },
-        {
-          name: 'descricao',
-          type: 'text',
-          isNullable: false,
-        },
-        {
-          name: 'data_cadastro',
-          type: 'datetime',
-        },
-        {
-          name: 'data_modificacao_cadastro',
-          type: 'datetime',
-        },
-        {
-          name: 'usuarioId',
-          type: 'integer',
-        }
+        coluna_primary_key,
+        coluna_nome,
+        coluna_preco,
+        coluna_ativo,
+        coluna_codigo,
+        coluna_descricao,
+        coluna_data_cadastro,
+        coluna_data_modificacao_cadastro,
+        coluna_usuarioId,
       ],
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Refeicao)
-      .values(refeicao_seeder)
-      .execute();
+    // await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(Refeicao)
+    //   .values(refeicao_seeder)
+    //   .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('refeicao');
+    await queryRunner.dropTable(NOME_TABELA);
   }
 }
 

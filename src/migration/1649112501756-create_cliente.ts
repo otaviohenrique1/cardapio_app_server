@@ -1,97 +1,32 @@
 import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
 import { Cliente } from "../entity/Cliente";
 import { cliente_seeder } from "../seeder/cliente_seeder";
+import { coluna_bairro, coluna_cep, coluna_cidade, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_email, coluna_estado, coluna_nome, coluna_numero, coluna_primary_key, coluna_rua, coluna_senha, coluna_telefone, if_table_not_exist } from "../utils/constantes_migration";
+
+const NOME_TABELA = 'cliente';
 
 export class createCliente1649112501756 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('cliente', true);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
-      name: 'cliente',
+      name: NOME_TABELA,
       columns: [
-        {
-          name: 'id',
-          type: 'integer',
-          unsigned: true,
-          isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
-        },
-        {
-          name: 'nome',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'email',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'senha',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'rua',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'numero',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'bairro',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cidade',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'estado',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'cep',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'telefone',
-          type: 'varchar',
-          isNullable: false,
-          length: '255'
-        },
-        {
-          name: 'codigo',
-          type: 'varchar',
-          isGenerated: true,
-          generationStrategy: 'uuid'
-        },
-        {
-          name: 'data_cadastro',
-          type: 'datetime'
-        },
-        {
-          name: 'data_modificacao_cadastro',
-          type: 'datetime'
-        },
+        coluna_primary_key,
+        coluna_nome,
+        coluna_email,
+        coluna_senha,
+        coluna_rua,
+        coluna_numero,
+        coluna_bairro,
+        coluna_cidade,
+        coluna_estado,
+        coluna_cep,
+        coluna_telefone,
+        coluna_codigo,
+        coluna_data_cadastro,
+        coluna_data_modificacao_cadastro,
       ]
-    }), true);
+    }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
     await getConnection()
@@ -103,7 +38,7 @@ export class createCliente1649112501756 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('cliente');
+    await queryRunner.dropTable(NOME_TABELA);
   }
 }
 
