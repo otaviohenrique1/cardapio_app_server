@@ -1,113 +1,86 @@
 import Refeicao from "../entity/Refeicao";
+import { GeradorDados } from "./GeradorDados";
 import { gerador_seeder_insert } from "./gerador_seeder";
 
-export const refeicao_1 = {
-  id: 1,
-  nome: 'X-Burguer 1',
-  ativo: true,
-  data_cadastro: '2022-04-06 17:10:36',
-  data_modificacao_cadastro: '2022-04-06 17:10:36',
-  codigo: 'e1fd2a6e-6fee-48bf-8eb5-6dc12a49d104',
-  preco: 15,
-  descricao: 'Hamburguer basico 1',
-  usuario: { id: 1 },
-};
+function GeradorSeederRefeicao(
+  id: number,
+  nome: string,
+  ativo: boolean,
+  data_cadastro: string,
+  data_modificacao_cadastro: string,
+  codigo: string,
+  preco: number,
+  descricao: string,
+  usuarioId: { id: number }
+) {
+  return {
+    id, nome, ativo, data_cadastro, data_modificacao_cadastro,
+    codigo, preco, descricao, usuarioId
+  };
+}
 
-export const refeicao_2 = {
-  id: 2,
-  nome: 'X-Burguer 2',
-  ativo: true,
-  data_cadastro: '2022-04-06 17:46:41',
-  data_modificacao_cadastro: '2022-04-06 17:46:41',
-  codigo: '5859a511-e18a-4ad0-9d17-0d1a92383bb1',
-  preco: 12,
-  descricao: 'Hamburguer basico 2',
-  usuario: { id: 1 },
-};
+export const refeicao_1 = GeradorSeederRefeicao(
+  1, 'X-Burguer 1', true,
+  '2022-04-06 17:10:36', '2022-04-06 17:10:36',
+  GeradorDados.GeraCodigo(), 15,
+  'Hamburguer basico 1', { id: 1 },
+);
 
-export const refeicao_3 = {
-  id: 3,
-  nome: 'X-Burguer 3',
-  ativo: true,
-  data_cadastro: '2022-04-06 18:55:39',
-  data_modificacao_cadastro: '2022-04-06 18:55:39',
-  codigo: '300971e4-de41-4a64-8489-fbe07dbe3442',
-  preco: 10,
-  descricao: 'Hamburguer basico 3',
-  usuario: { id: 1 },
-};
+export const refeicao_2 = GeradorSeederRefeicao(
+  2, 'X-Burguer 2', true,
+  '2022-04-06 17:46:41', '2022-04-06 17:46:41',
+  GeradorDados.GeraCodigo(),
+  12, 'Hamburguer basico 2', { id: 1 }
+);
 
-export const refeicao_4 = {
-  id: 4,
-  nome: 'X-Burguer 4',
-  ativo: true,
-  data_cadastro: '2022-04-06 19:47:54',
-  data_modificacao_cadastro: '2022-04-06 19:47:54',
-  codigo: '16cdf4fa-d757-4c71-b5ee-95422d56cfb4',
-  preco: 20,
-  descricao: 'Hamburguer basico 4',
-  usuario: { id: 1 },
-};
+export const refeicao_3 = GeradorSeederRefeicao(
+  3, 'X-Burguer 3', true,
+  '2022-04-06 18:55:39', '2022-04-06 18:55:39',
+  GeradorDados.GeraCodigo(),
+  10, 'Hamburguer basico 3', { id: 1 }
+);
 
-export const refeicao_5 = {
-  id: 5,
-  nome: 'X-Burguer 5',
-  ativo: true,
-  data_cadastro: '2022-04-06 19:52:42',
-  data_modificacao_cadastro: '2022-04-06 19:52:42',
-  codigo: 'cf238e14-793a-4173-8d64-249d2fa25f09',
-  preco: 25,
-  descricao: 'Hamburguer basico 5',
-  usuario: { id: 1 },
-};
+export const refeicao_4 = GeradorSeederRefeicao(
+  4, 'X-Burguer 4', true,
+  '2022-04-06 19:47:54', '2022-04-06 19:47:54',
+  GeradorDados.GeraCodigo(), 20,
+  'Hamburguer basico 4', { id: 1 }
+);
 
-export const refeicao_6 = {
-  id: 6,
-  nome: 'X-Burguer 6',
-  ativo: true,
-  data_cadastro: '2022-04-06 19:57:05',
-  data_modificacao_cadastro: '2022-04-06 19:57:05',
-  codigo: 'b16bfcb2-031d-4e6e-b859-7c619cac881c',
-  preco: 28,
-  descricao: 'Hamburguer basico 6',
-  usuario: { id: 1 },
-};
+export const refeicao_5 = GeradorSeederRefeicao(
+  5, 'X-Burguer 5', true,
+  '2022-04-06 19:52:42', '2022-04-06 19:52:42',
+  GeradorDados.GeraCodigo(), 25,
+  'Hamburguer basico 5', { id: 1 }
+);
 
-export const refeicao_7 = {
-  id: 7,
-  nome: 'X-Cubo 1',
-  ativo: true,
-  data_cadastro: '2022-04-13 20:14:02',
-  data_modificacao_cadastro: '2022-04-13 20:14:02',
-  codigo: '1a2d6d98-7812-4f3e-8749-18e5cab5af14',
-  preco: 20,
-  descricao: 'Lanche bom',
-  usuario: { id: 4 },
-};
+export const refeicao_6 = GeradorSeederRefeicao(
+  6, 'X-Burguer 6', true,
+  '2022-04-06 19:57:05', '2022-04-06 19:57:05',
+  GeradorDados.GeraCodigo(), 28,
+  'Hamburguer basico 6', { id: 1 }
+);
 
-export const refeicao_8 = {
-  id: 8,
-  nome: 'X-Cubo 2',
-  ativo: true,
-  data_cadastro: '2022-04-13 19:38:02',
-  data_modificacao_cadastro: '2022-04-13 19:38:02',
-  codigo: '21ebc5e1-4a05-44ec-b3a0-b573040a6f6f',
-  preco: 20,
-  descricao: 'Lanche bom',
-  usuario: { id: 4 },
-};
+export const refeicao_7 = GeradorSeederRefeicao(
+  7, 'X-Cubo 1', true,
+  '2022-04-13 20:14:02', '2022-04-13 20:14:02',
+  GeradorDados.GeraCodigo(), 20,
+  'Lanche bom', { id: 4 }
+);
 
-export const refeicao_9 = {
-  id: 9,
-  nome: 'X-Cubo 3',
-  ativo: true,
-  data_cadastro: '2022-04-13 20:38:02',
-  data_modificacao_cadastro: '2022-04-13 20:38:02',
-  codigo: '47ec6627-be8c-4617-90a8-71a46d5097a3',
-  preco: 20,
-  descricao: 'Lanche bom',
-  usuario: { id: 4 },
-};
+export const refeicao_8 = GeradorSeederRefeicao(
+  8, 'X-Cubo 2', true,
+  '2022-04-13 19:38:02', '2022-04-13 19:38:02',
+  GeradorDados.GeraCodigo(), 20,
+  'Lanche bom', { id: 4 }
+);
+
+export const refeicao_9 = GeradorSeederRefeicao(
+  9, 'X-Cubo 3', true,
+  '2022-04-13 20:38:02', '2022-04-13 20:38:02',
+  GeradorDados.GeraCodigo(), 20,
+  'Lanche bom', { id: 4 }
+);
 
 export const refeicao_seeder = [
   refeicao_1, refeicao_2, refeicao_3, refeicao_4, refeicao_5,
