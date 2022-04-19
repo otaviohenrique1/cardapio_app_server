@@ -1,6 +1,5 @@
 import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
 import Refeicao from "../entity/Refeicao";
-import { refeicao_seeder } from "../seeder/refeicao_seeder";
 import { coluna_ativo, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_descricao, coluna_nome, coluna_preco, coluna_primary_key, coluna_usuarioId, if_table_not_exist } from "../utils/constantes_migration";
 
 const NOME_TABELA = 'refeicao';
@@ -24,12 +23,16 @@ export class createRefeicao1643649909282 implements MigrationInterface {
     }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    // await getConnection()
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Refeicao)
-    //   .values(refeicao_seeder)
-    //   .execute();
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Refeicao)
+      .values([
+        refeicao_1, refeicao_2, refeicao_3,
+        refeicao_4, refeicao_5, refeicao_6,
+        refeicao_7, refeicao_8, refeicao_9
+      ])
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -37,98 +40,110 @@ export class createRefeicao1643649909282 implements MigrationInterface {
   }
 }
 
-/* Seeder - Retirar quando for para producao */
-// await getConnection()
-//   .createQueryBuilder()
-//   .insert()
-//   .into(Refeicao)
-//   .values([
-//     {
-//       id: 1,
-//       nome: 'X-Burguer 1',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 17:10:36',
-//       data_modificacao_cadastro: '2022-04-06 17:10:36',
-//       codigo: 'e1fd2a6e-6fee-48bf-8eb5-6dc12a49d104',
-//       preco: 15,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 1',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 2,
-//       nome: 'X-Burguer 2',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 17:46:41',
-//       data_modificacao_cadastro: '2022-04-06 17:46:41',
-//       codigo: '5859a511-e18a-4ad0-9d17-0d1a92383bb1',
-//       preco: 12,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 2',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 3,
-//       nome: 'X-Burguer 3',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 18:55:39',
-//       data_modificacao_cadastro: '2022-04-06 18:55:39',
-//       codigo: '300971e4-de41-4a64-8489-fbe07dbe3442',
-//       preco: 10,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 3',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 4,
-//       nome: 'X-Burguer 4',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 19:47:54',
-//       data_modificacao_cadastro: '2022-04-06 19:47:54',
-//       codigo: '16cdf4fa-d757-4c71-b5ee-95422d56cfb4',
-//       preco: 20,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 4',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 5,
-//       nome: 'X-Burguer 5',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 19:52:42',
-//       data_modificacao_cadastro: '2022-04-06 19:52:42',
-//       codigo: 'cf238e14-793a-4173-8d64-249d2fa25f09',
-//       preco: 25,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 5',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 6,
-//       nome: 'X-Burguer 6',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-06 19:57:05',
-//       data_modificacao_cadastro: '2022-04-06 19:57:05',
-//       codigo: 'b16bfcb2-031d-4e6e-b859-7c619cac881c',
-//       preco: 28,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Hamburguer basico 6',
-//       usuario: { id: 1 },
-//     },
-//     {
-//       id: 7,
-//       nome: 'X-Cubo 1',
-//       ativo: true, /* 1 */
-//       data_cadastro: '2022-04-13 20:14:02',
-//       data_modificacao_cadastro: '2022-04-13 20:14:02',
-//       codigo: '1a2d6d98-7812-4f3e-8749-18e5cab5af14',
-//       preco: 20,
-//       ingredientes: '\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Cubo\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"',
-//       descricao: 'Lanche bom',
-//       usuario: { id: 4 },
-//     }
-//   ])
-//   .execute();
+const refeicao_1 = {
+  id: 1,
+  nome: 'X-Burguer 1',
+  codigo: '622f056b-1294-450e-9ee0-52fd5e94f164',
+  ativo: true,
+  preco: 15,
+  descricao: 'Hamburguer basico 1',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 1
+};
 
-/* Seeder - Retirar quando for para producao */
-// await queryRunner.query("INSERT INTO refeicao (id, nome, ativo, data_cadastro, data_modificacao_cadastro, codigo, usuarioId, preco, ingredientes, descricao) VALUES (1,'X-Burguer 1',1,'2022-04-06 17:10:36','2022-04-06 17:10:36','e1fd2a6e-6fee-48bf-8eb5-6dc12a49d104',1,15,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 1'),(2,'X-Burguer 2',1,'2022-04-06 17:46:41','2022-04-06 17:46:41','5859a511-e18a-4ad0-9d17-0d1a92383bb1',1,12,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 2'),(3,'X-Burguer 3',1,'2022-04-06 18:55:39','2022-04-06 18:55:39','300971e4-de41-4a64-8489-fbe07dbe3442',1,10,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 3'),(4,'X-Burguer 4',1,'2022-04-06 19:47:54','2022-04-06 19:47:54','16cdf4fa-d757-4c71-b5ee-95422d56cfb4',1,20,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 4'),(5,'X-Burguer 5',1,'2022-04-06 19:52:42','2022-04-06 19:52:42','cf238e14-793a-4173-8d64-249d2fa25f09',1,25,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 5'),(6,'X-Burguer 6',1,'2022-04-06 19:57:05','2022-04-06 19:57:05','b16bfcb2-031d-4e6e-b859-7c619cac881c',1,28,'\"[{\\\"nome\\\":\\\"Pão\\\"},{\\\"nome\\\":\\\"Carne\\\"},{\\\"nome\\\":\\\"Queijo\\\"}]\"','Hamburguer basico 6'),(7,'X-Cubo 1',1,'2022-04-13 20:14:02','2022-04-13 20:14:02','1a2d6d98-7812-4f3e-8749-18e5cab5af14',4,20,'[{\"nome\":\"Pão\"},{\"nome\":\"Cubo\"}]','Lanche bom');");
+const refeicao_2 = {
+  id: 2,
+  nome: 'X-Burguer 2',
+  codigo: 'c409b0ae-8eb3-45f4-8392-b44024391cc2',
+  ativo: true,
+  preco: 12,
+  descricao: 'Hamburguer basico 2',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 1
+};
+
+const refeicao_3 = {
+  id: 3,
+  nome: 'X-Burguer 3',
+  codigo: '8215ea8f-798e-4dae-9d6c-1c286aca3e58',
+  ativo: true,
+  preco: 10,
+  descricao: 'Hamburguer basico 3',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 2
+};
+
+const refeicao_4 = {
+  id: 4,
+  nome: 'X-Burguer 4',
+  codigo: '504e69f7-5d7e-433b-b939-d2cbb8cba9c7',
+  ativo: true,
+  preco: 20,
+  descricao: 'Hamburguer basico 4',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 2
+};
+
+const refeicao_5 = {
+  id: 5,
+  nome: 'X-Burguer 5',
+  codigo: '1b1e69a4-12d4-434c-a723-8092d238bb6d',
+  ativo: true,
+  preco: 25,
+  descricao: 'Hamburguer basico 5',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 3
+};
+
+const refeicao_6 = {
+  id: 6,
+  nome: 'X-Burguer 6',
+  codigo: '8fe089c6-1f8f-4319-8f82-a5d550458fdb',
+  ativo: true,
+  preco: 28,
+  descricao: 'Hamburguer basico 6',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 3
+};
+
+const refeicao_7 = {
+  id: 7,
+  nome: 'X-Burguer 7',
+  codigo: '82d03edd-9ba3-4909-82f5-67332e115c1a',
+  ativo: true,
+  preco: 20,
+  descricao: 'Hamburguer basico 7',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 4
+};
+
+const refeicao_8 = {
+  id: 8,
+  nome: 'X-Burguer 8',
+  codigo: '0a304aea-fe08-4f39-9f56-24abfd2ed65f',
+  ativo: true,
+  preco: 20,
+  descricao: 'Hamburguer basico 8',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 4
+};
+
+const refeicao_9 = {
+  id: 9,
+  nome: 'X-Burguer 9',
+  codigo: '9b56e506-1519-4b81-aaf9-604ae6ed0f1c',
+  ativo: true,
+  preco: 20,
+  descricao: 'Hamburguer basico 9',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date,
+  usuarioId: 4
+};

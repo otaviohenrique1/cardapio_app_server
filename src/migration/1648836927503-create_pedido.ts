@@ -1,7 +1,6 @@
-import { getConnection, MigrationInterface, QueryRunner, Table, TableColumn } from "typeorm";
+import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
 import { Pedido } from "../entity/Pedido";
-import { pedido_seeder } from "../seeder/pedido_seeder";
-import { coluna_clienteId, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_preco_total, coluna_primary_key, if_table_not_exist } from "../utils/constantes_migration";
+import { coluna_clienteId, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_preco_total, coluna_primary_key, coluna_status_pedido, if_table_not_exist } from "../utils/constantes_migration";
 
 const NOME_TABELA = 'pedido';
 export class createPedido1648836927503 implements MigrationInterface {
@@ -13,6 +12,7 @@ export class createPedido1648836927503 implements MigrationInterface {
         coluna_primary_key,
         coluna_preco_total,
         coluna_codigo,
+        coluna_status_pedido,
         coluna_data_cadastro,
         coluna_data_modificacao_cadastro,
         coluna_clienteId,
@@ -24,7 +24,9 @@ export class createPedido1648836927503 implements MigrationInterface {
       .createQueryBuilder()
       .insert()
       .into(Pedido)
-      .values(pedido_seeder)
+      .values([
+        pedido_1
+      ])
       .execute();
   }
 
@@ -33,5 +35,12 @@ export class createPedido1648836927503 implements MigrationInterface {
   }
 }
 
-/* Seeder - Retirar quando for para producao */
-// await queryRunner.query("");
+const pedido_1 = {
+  id: 1,
+  clienteId: 1 ,
+  codigo: '08064641-c4fb-45e5-9246-aeff088e8b74',
+  status_pedido: "Entregue",
+  preco_total: 57,
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date()
+};
