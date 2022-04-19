@@ -129,21 +129,10 @@ export const coluna_telefone = CriaColunaTabela({
   length: '255'
 });
 
-export const coluna_clienteId = CriaColunaTabela({
-  name: 'clienteId',
-  type: 'integer'
-});
-
 export const coluna_path = CriaColunaTabela({
   name: 'path',
   type: 'varchar'
 });
-
-export const coluna_refeicaoId = CriaColunaTabela({
-  name: 'refeicaoId',
-  type: 'integer'
-});
-
 
 export const coluna_preco = CriaColunaTabela({
   name: 'preco',
@@ -165,7 +154,26 @@ export const coluna_descricao = CriaColunaTabela({
   isNullable: false,
 });
 
+export const coluna_clienteId = CriaColunaTabela({
+  name: 'clienteId',
+  type: 'integer',
+  unsigned: true,
+});
+
+export const coluna_refeicaoId = CriaColunaTabela({
+  name: 'refeicaoId',
+  type: 'integer',
+  unsigned: true,
+});
+
 export const coluna_usuarioId = CriaColunaTabela({
   name: 'usuarioId',
   type: 'integer',
+  unsigned: true,
+});
+
+export const coluna_pedidoId = CriaColunaTabela({
+  name: 'pedidoId',
+  type: 'integer',
+  unsigned: true,
 });
