@@ -3,6 +3,9 @@ import * as Yup from "yup";
 import { EMAIL_INVALIDO, valor_minimo_carateres, MINIMO_CARACTERES, valor_maximo_carateres, MAXIMO_CARACTERES } from "./constantes";
 
 /* Schemas de validacao */
+export const valida_id = Yup
+  .number()
+  .required(GeradorMensagem.GeraMensagemSimples('Campo vazio'));
 
 export const valida_nome = Yup
   .string()
@@ -83,13 +86,9 @@ export const valida_ativo = Yup
   .boolean()
   .required(GeradorMensagem.GeraMensagemErro('ativo'));
 
-export const valida_id = Yup
-  .number()
-  .required(GeradorMensagem.GeraMensagemErro('id'));
-
 export const valida_quantidade = Yup
   .number()
-  .required(GeradorMensagem.GeraMensagemErro('ativo'));
+  .required(GeradorMensagem.GeraMensagemErro('quantidade'));
 
 export const valida_path = Yup
   .string()
@@ -107,15 +106,16 @@ export const valida_lista_ingredientes = Yup.array(
   Yup
     .object()
     .shape({
-      valida_nome,
-      valida_quantidade
+      nome: valida_nome,
+      quantidade: valida_quantidade
     })
 );
 
-export const valida_lista_refeicoes = Yup
-  .object()
-  .shape({
-    valida_nome,
-    valida_preco,
-    valida_quantidade
-  });
+export const valida_lista_refeicoes = Yup.array(
+  Yup
+    .object()
+    .shape({
+      refeicaoId: valida_id,
+      quantidade: valida_quantidade
+    })
+);
