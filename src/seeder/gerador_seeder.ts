@@ -1,51 +1,86 @@
-import { v4 } from "uuid";
-import { randomBytes } from "crypto";
-import { EntityTarget, getConnection } from "typeorm";
-import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
-
-/**
- * Gera codigo usando uuid.v4
- * @returns Valor string
- * @example
- *  console.log(gera_codigo_uuid_v4());
- *  Imprime => 06e7a615-5ced-417c-a8c0-faca8c78b7c2
- */
-export function gera_codigo_uuid_v4() {
-  const resultado = v4().toString();
-  return resultado;
-}
-
-/**
- * Gera nome arquivo de imagem
- * @param nome_arquivo Valor string
- * @param extensao_arquivo Valor string
- * @returns Valor string
- * @example
- *  console.log(gera_nome_arquivo('a1', 'jpg'));
- *  Imprime => dcdbc3-1649976852679-a1.jpg
- */
-export function gera_nome_arquivo(nome_arquivo: string, extensao_arquivo: string) {
-  let date = Date.now();
-  let random_bytes = randomBytes(3).toString('hex')
-  const resultado = `${random_bytes}-${date}-${nome_arquivo}.${extensao_arquivo}`;
-  return resultado;
-}
-
-/* Seeder - Retirar quando for para producao */
-/**
- * Insere os dados na tabela
- * @param entityTarget Specifies INTO which entity's table insertion will be executed.
- * @param values Values needs to be inserted into table.
- * @returns Promise<InsertResult>
- */
-export function gerador_seeder_insert<Entity>(
-  entityTarget: EntityTarget<Entity>,
-  values: QueryDeepPartialEntity<Entity> | QueryDeepPartialEntity<Entity>[]
+export function GeradorSeederUsuario(
+  id: number, nome: string, codigo: string, email: string,
+  senha: string, data_cadastro: Date, data_modificacao_cadastro: Date
 ) {
-  return getConnection()
-    .createQueryBuilder()
-    .insert()
-    .into(entityTarget)
-    .values(values)
-    .execute();
+  return {
+    id, nome, codigo, email, senha,
+    data_cadastro, data_modificacao_cadastro
+  };
+}
+
+export function GeradorSeederRefeicao(
+  id: number, nome: string, codigo: string, ativo: boolean, preco: number, descricao: string,
+  data_cadastro: Date, data_modificacao_cadastro: Date, usuarioId: { id: number }
+) {
+  return {
+    id, nome, codigo, ativo, preco, descricao,
+    data_cadastro, data_modificacao_cadastro, usuarioId
+  };
+}
+
+export function GeradorSeederPedido(
+  id: number, clienteId: { id: number }, codigo: string, status_pedido: string,
+  preco_total: number, data_cadastro: Date, data_modificacao_cadastro: Date
+) {
+  return {
+    id, clienteId, codigo, status_pedido,
+    preco_total, data_cadastro, data_modificacao_cadastro
+  };
+}
+
+export function GeradorSeederPedidoRefeicao(
+  id: number, refeicaoId: { id: number },
+  quantidade: number, pedidoId: { id: number }
+) {
+  return {
+    id, refeicaoId, quantidade, pedidoId
+  };
+}
+
+export function GeradorSeederIngrediente(
+  id: number, nome: string, quantidade: number, refeicao: { id: number }
+) {
+  return {
+    id, nome, quantidade, refeicao
+  };
+}
+
+export function GeradorSeederImagem(
+  id: number, path: string, refeicaoId: { id: number }
+) {
+  return {
+    id, path, refeicaoId
+  };
+}
+
+export function GeradorSeederEmpresa(
+  id: number, nome: string, email: string, senha: string, status_cadastro: boolean,
+  codigo: string, data_cadastro: Date, data_modificacao_cadastro: Date
+) {
+  return {
+    id, nome, email, senha, status_cadastro, codigo,
+    data_cadastro, data_modificacao_cadastro
+  };
+}
+
+export function GeradorSeederCliente(
+  id: number, nome: string, codigo: string, rua: string, numero: string,
+  bairro: string, cidade: string, estado: string, cep: string, email: string,
+  senha: string, telefone: string, data_cadastro: Date, data_modificacao_cadastro: Date
+) {
+  return {
+    id, nome, codigo, email, senha,
+    telefone, rua, numero, bairro, cidade, estado, cep,
+    data_cadastro, data_modificacao_cadastro
+  };
+}
+
+export function GeradorSeederAdministrador(
+  id: number, nome: string, codigo: string, email: string,
+  senha: string, data_cadastro: Date, data_modificacao_cadastro: Date
+) {
+  return {
+    id, nome, codigo, email, senha,
+    data_cadastro, data_modificacao_cadastro
+  };
 }
