@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Refeicao from "./Refeicao";
 
 @Entity('imagem')
@@ -10,5 +10,9 @@ export class Imagem extends BaseEntity {
   path: string;
 
   @ManyToOne(() => Refeicao, refeicao => refeicao.imagens)
+  @JoinColumn({ name: 'refeicaoId' })
   refeicao: Refeicao;
+
+  @Column({ type: 'integer', unsigned: true })
+  refeicaoId: number;
 }

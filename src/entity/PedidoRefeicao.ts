@@ -1,21 +1,27 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Pedido } from "./Pedido";
+import Refeicao from "./Refeicao";
 
 @Entity('pedido_refeicao')
 export class PedidoRefeicao extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  nome: string;
+  @OneToOne(() => Refeicao, (refeicao) => refeicao.pedido_refeicao)
+  @JoinColumn({ name: 'refeicaoId' })
+  refeicao: Pedido;
 
-  @Column()
-  preco: number;
+  @Column({ type: 'integer', unsigned: true })
+  refeicaoId: number;
 
   @Column()
   quantidade: number;
 
   /* muitas refeicoes em 1 pedido */
   @ManyToOne(() => Pedido, pedido => pedido.lista_refeicoes)
-  pedido_refeicao: Pedido;
+  @JoinColumn({ name: 'pedidoId' })
+  pedido: Pedido;
+
+  @Column({ type: 'integer', unsigned: true })
+  pedidoId: number;
 }

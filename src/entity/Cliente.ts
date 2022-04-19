@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, Generated, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { Pedido } from "./Pedido";
 
 @Entity('cliente')
