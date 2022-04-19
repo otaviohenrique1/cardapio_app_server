@@ -5,6 +5,11 @@ import { Pedido } from "../entity/Pedido";
 import pedidoView from "../views/PedidoView";
 import { valida_nome, valida_data_cadastro, valida_data_modificacao_cadastro, valida_status_pedido, valida_preco_total, valida_lista_refeicoes } from "../utils/SchemasValidacao";
 
+interface PedidoRefeicaoTypes {
+  refeicaoId: number;
+  quantidade: number;
+}
+
 export default {
   /**
    * Listar todas os pedidos cadastrados
@@ -33,11 +38,17 @@ export default {
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const {
-      nome, status_pedido, lista_refeicoes, preco_total,
+      nome, status_pedido, preco_total,
       data_cadastro, data_modificacao_cadastro
     } = request.body;
 
     const pedidoRepository = getRepository(Pedido);
+
+    const requestPedidoRefeicao = request.body.ingredientes as PedidoRefeicaoTypes[];
+    const lista_refeicoes = requestPedidoRefeicao.map((pedido_refeicao) => {
+      const { refeicaoId, quantidade } = pedido_refeicao;
+      return { refeicaoId, quantidade };
+    });
 
     const data = {
       nome, status_pedido, lista_refeicoes, preco_total,
