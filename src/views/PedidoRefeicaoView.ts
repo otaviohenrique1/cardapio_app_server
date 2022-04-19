@@ -1,13 +1,13 @@
 import { PedidoRefeicao } from "../entity/PedidoRefeicao";
 
 export default {
-  render(pedido: PedidoRefeicao) {
+  render(pedido_refeicao: PedidoRefeicao) {
     const {
-      id, nome, preco, quantidade
-    } = pedido;
+      id, refeicaoId, quantidade, pedidoId
+    } = pedido_refeicao;
 
     return {
-      id, nome, preco, quantidade
+      id, refeicaoId, quantidade, pedidoId
     };
   },
 
