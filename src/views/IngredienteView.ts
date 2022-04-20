@@ -3,11 +3,11 @@ import { Ingrediente } from "../entity/Ingrediente";
 export default {
   render(ingrediente: Ingrediente) {
     const {
-      id, nome, quantidade
+      id, nome, quantidade, refeicaoId
     } = ingrediente;
 
     return {
-      id, nome, quantidade
+      id, nome, quantidade, refeicaoId
     };
   },
 
