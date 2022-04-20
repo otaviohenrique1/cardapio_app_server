@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getRepository } from "typeorm";
-import * as Yup from "yup";
-import { valida_ativo, valida_data_cadastro, valida_data_modificacao_cadastro, valida_descricao, valida_imagens, valida_lista_ingredientes, valida_nome, valida_preco } from "../utils/SchemasValidacao";
+import { valida_alualizacao_refeicao, valida_criacao_refeicao } from "../utils/SchemasValidacao";
 import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
 
@@ -10,127 +9,195 @@ interface IngredienteTypes {
   quantidade: number;
 }
 
-export default {
-  /**
-   * Listar todas as refeicoes cadastradas (Rota de teste)
-   */
-  async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
-    const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.find();
-    return response.json(refeicaoView.renderMany(refeicao));
-  },
-  /**
-   * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
-   */
-  async index(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
-    const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.find({
-      where: { usuarioId: id  },
-      relations: ['imagens'],
-    });
-    return response.json(refeicaoView.renderMany(refeicao));
-  },
-  /**
-   * Busca uma refeicao cadastrada usando o id da mesma e exibe os seus dados
-   */
-  async show(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
-    const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens'] });
-    return response.json(refeicaoView.render(refeicao));
-  },
-  /**
-   * Cadastrada uma refeicao
-   */
-  async create(request: Request, response: Response, next: NextFunction) {
-    const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
-    const refeicaoRepository = getRepository(Refeicao);
+/**
+ * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
+ */
+export async function listar_refeicao(request: Request, response: Response, next: NextFunction) {
+  const { id } = request.params;
+  const refeicaoRepository = getRepository(Refeicao);
+  const refeicao = await refeicaoRepository.find({
+    where: { usuarioId: id },
+    relations: ['imagens', 'ingredientes'],
+  });
+  return response.json(refeicaoView.renderMany(refeicao));
+}
 
-    const requestImagens = request.files as Express.Multer.File[];
-    const imagens = requestImagens.map((imagem) => {
-      return { path: imagem.filename };
-    });
+/**
+ * Busca uma refeicao cadastrada usando o id da mesma e exibe os seus dados
+ */
+export async function busca_refeicao(request: Request, response: Response, next: NextFunction) {
+  const { id } = request.params;
+  const refeicaoRepository = getRepository(Refeicao);
+  const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens', 'ingredientes'] });
+  return response.json(refeicaoView.render(refeicao));
+}
 
-    const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
-    const ingredientes = requestIngredientes.map((ingrediente) => {
-      const { nome, quantidade } = ingrediente;
-      return { nome, quantidade };
-    });
+/**
+ * Cadastrada uma refeicao
+ */
+export async function criar_refeicao(request: Request, response: Response, next: NextFunction) {
+  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
+  const refeicaoRepository = getRepository(Refeicao);
 
-    const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
+  const requestImagens = request.files as Express.Multer.File[];
+  const imagens = requestImagens.map((imagem) => {
+    return { path: imagem.filename };
+  });
 
-    const schema = Yup
-      .object()
-      .shape({
-        nome: valida_nome,
-        preco: valida_preco,
-        ingredientes: valida_lista_ingredientes,
-        descricao: valida_descricao,
-        ativo: valida_ativo,
-        imagens: valida_imagens,
-        data_cadastro: valida_data_cadastro,
-        data_modificacao_cadastro: valida_data_modificacao_cadastro,
-      });
+  const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
+  const ingredientes = requestIngredientes.map((ingrediente) => {
+    const { nome, quantidade } = ingrediente;
+    return { nome, quantidade };
+  });
 
-    await schema.validate(data, { abortEarly: false });
-    const refeicao = refeicaoRepository.create(data);
-    await refeicaoRepository.save(refeicao);
+  const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
 
-    return response
-      .status(201)
-      .json(refeicao);
-  },
-  /**
-   * Apaga uma refeicao, usando o id da mesma
-   */
-  async delete(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
-    const refeicaoRepository = getRepository(Refeicao);
-    const refeicao = await refeicaoRepository.delete(id);
+  await valida_criacao_refeicao.validate(data, { abortEarly: false });
+  const refeicao = refeicaoRepository.create(data);
+  await refeicaoRepository.save(refeicao);
 
-    return response
-      .status(200)
-      .json(refeicao);
-  },
-  /**
-   * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
-   */
-  async update(request: Request, response: Response, next: NextFunction) {
-    const { id, nome, preco, descricao, ativo } = request.body;
-    const refeicaoRepository = getRepository(Refeicao);
+  return response.status(201).json(refeicao);
+}
 
-    const requestImagens = request.files as Express.Multer.File[];
-    const imagens = requestImagens.map((imagem) => {
-      return { path: imagem.filename };
-    });
+/**
+ * Apaga uma refeicao, usando o id da mesma
+ */
+export async function apagar_refeicao(request: Request, response: Response, next: NextFunction) {
+  const { id } = request.params;
+  const refeicaoRepository = getRepository(Refeicao);
+  const refeicao = await refeicaoRepository.delete(id);
 
-    /* arrumar, converter de string json */
-    const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
-    const ingredientes = requestIngredientes.map((ingrediente) => {
-      const { nome, quantidade } = ingrediente;
-      return { nome, quantidade };
-    });
+  return response.status(200).json(refeicao);
+}
 
-    const data = { nome, preco, ingredientes, ativo, descricao, imagens };
+/**
+ * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
+ */
+export async function atualizar_refeicao(request: Request, response: Response, next: NextFunction) {
+  const { id, nome, preco, descricao, ativo } = request.body;
+  const refeicaoRepository = getRepository(Refeicao);
 
-    const schema = Yup
-      .object()
-      .shape({
-        nome: valida_nome,
-        preco: valida_preco,
-        ingredientes: valida_lista_ingredientes,
-        descricao: valida_descricao,
-        ativo: valida_ativo,
-        imagens: valida_imagens,
-        data_modificacao_cadastro: valida_data_modificacao_cadastro,
-      });
+  const requestImagens = request.files as Express.Multer.File[];
+  const imagens = requestImagens.map((imagem) => {
+    return { path: imagem.filename };
+  });
 
-    await schema.validate(data, { abortEarly: false });
-    const refeicao = await refeicaoRepository.update(id, data);
+  /* arrumar, converter de string json */
+  const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
+  const ingredientes = requestIngredientes.map((ingrediente) => {
+    const { nome, quantidade } = ingrediente;
+    return { nome, quantidade };
+  });
 
-    return response
-      .status(201)
-      .json(refeicao);
-  },
-};
+  const data = { nome, preco, ingredientes, ativo, descricao, imagens };
+
+  await valida_alualizacao_refeicao.validate(data, { abortEarly: false });
+  const refeicao = await refeicaoRepository.update(id, data);
+
+  return response.status(201).json(refeicao);
+}
+
+// import { NextFunction, Request, Response } from "express";
+// import { getRepository } from "typeorm";
+// import { valida_alualizacao_refeicao, valida_criacao_refeicao } from "../utils/SchemasValidacao";
+// import Refeicao from "../entity/Refeicao";
+// import refeicaoView from "../views/RefeicaoView";
+
+// interface IngredienteTypes {
+//   nome: string;
+//   quantidade: number;
+// }
+
+// export default {
+//   /**
+//    * Listar todas as refeicoes cadastradas (Rota de teste)
+//    */
+//   async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
+//     const refeicaoRepository = getRepository(Refeicao);
+//     const refeicao = await refeicaoRepository.find();
+//     return response.json(refeicaoView.renderMany(refeicao));
+//   },
+//   /**
+//    * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
+//    */
+//   async index(request: Request, response: Response, next: NextFunction) {
+//     const { id } = request.params;
+//     const refeicaoRepository = getRepository(Refeicao);
+//     const refeicao = await refeicaoRepository.find({
+//       where: { usuarioId: id },
+//       relations: ['imagens', 'ingredientes'],
+//     });
+//     return response.json(refeicaoView.renderMany(refeicao));
+//   },
+//   /**
+//    * Busca uma refeicao cadastrada usando o id da mesma e exibe os seus dados
+//    */
+//   async show(request: Request, response: Response, next: NextFunction) {
+//     const { id } = request.params;
+//     const refeicaoRepository = getRepository(Refeicao);
+//     const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens', 'ingredientes'] });
+//     return response.json(refeicaoView.render(refeicao));
+//   },
+//   /**
+//    * Cadastrada uma refeicao
+//    */
+//   async create(request: Request, response: Response, next: NextFunction) {
+//     const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
+//     const refeicaoRepository = getRepository(Refeicao);
+
+//     const requestImagens = request.files as Express.Multer.File[];
+//     const imagens = requestImagens.map((imagem) => {
+//       return { path: imagem.filename };
+//     });
+
+//     const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
+//     const ingredientes = requestIngredientes.map((ingrediente) => {
+//       const { nome, quantidade } = ingrediente;
+//       return { nome, quantidade };
+//     });
+
+//     const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
+
+//     await valida_criacao_refeicao.validate(data, { abortEarly: false });
+//     const refeicao = refeicaoRepository.create(data);
+//     await refeicaoRepository.save(refeicao);
+
+//     return response.status(201).json(refeicao);
+//   },
+//   /**
+//    * Apaga uma refeicao, usando o id da mesma
+//    */
+//   async delete(request: Request, response: Response, next: NextFunction) {
+//     const { id } = request.params;
+//     const refeicaoRepository = getRepository(Refeicao);
+//     const refeicao = await refeicaoRepository.delete(id);
+
+//     return response.status(200).json(refeicao);
+//   },
+//   /**
+//    * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
+//    */
+//   async update(request: Request, response: Response, next: NextFunction) {
+//     const { id, nome, preco, descricao, ativo } = request.body;
+//     const refeicaoRepository = getRepository(Refeicao);
+
+//     const requestImagens = request.files as Express.Multer.File[];
+//     const imagens = requestImagens.map((imagem) => {
+//       return { path: imagem.filename };
+//     });
+
+//     /* arrumar, converter de string json */
+//     const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
+//     const ingredientes = requestIngredientes.map((ingrediente) => {
+//       const { nome, quantidade } = ingrediente;
+//       return { nome, quantidade };
+//     });
+
+//     const data = { nome, preco, ingredientes, ativo, descricao, imagens };
+
+//     await valida_alualizacao_refeicao.validate(data, { abortEarly: false });
+//     const refeicao = await refeicaoRepository.update(id, data);
+
+//     return response.status(201).json(refeicao);
+//   },
+// };
