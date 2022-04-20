@@ -16,9 +16,7 @@ export default {
    */
   async index(request: Request, response: Response, next: NextFunction) {
     const pedidoRepository = getRepository(Pedido);
-
     const pedido = await pedidoRepository.find();
-
     return response.json(pedido);
   },
   /**
@@ -26,11 +24,8 @@ export default {
    */
   async show(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const pedidoRepository = getRepository(Pedido);
-
     const pedido = await pedidoRepository.findOneOrFail(id);
-
     return response.json(pedidoView.render(pedido));
   },
   /**
@@ -67,9 +62,7 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const pedido = pedidoRepository.create(data);
-
     await pedidoRepository.save(pedido);
 
     return response
@@ -81,9 +74,7 @@ export default {
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, status_pedido, data_modificacao_cadastro } = request.body;
-
     const pedidoRepository = getRepository(Pedido);
-
     const data = { status_pedido, data_modificacao_cadastro };
 
     const schema = Yup
@@ -95,7 +86,6 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const pedido = await pedidoRepository.update(id, data);
 
     return response

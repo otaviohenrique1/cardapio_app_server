@@ -12,9 +12,7 @@ export default {
    */
   async login(request: Request, response: Response, next: NextFunction) {
     const { email, senha } = request.body;
-
     let existingUser: any;
-
     const empresaRepository = getRepository(Empresa);
 
     try {
@@ -56,9 +54,7 @@ export default {
    */
   async index(request: Request, response: Response, next: NextFunction) {
     const empresaRepository = getRepository(Empresa);
-
     const empresa = await empresaRepository.find();
-
     return response.json(empresa);
   },
   /**
@@ -66,11 +62,8 @@ export default {
    */
   async show(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const empresaRepository = getRepository(Empresa);
-
     const empresa = await empresaRepository.findOneOrFail(id);
-
     return response.json(empresaView.render(empresa));
   },
   /**
@@ -78,9 +71,7 @@ export default {
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, email, senha, status_cadastro, data_cadastro, data_modificacao_cadastro } = request.body;
-
     const empresaRepository = getRepository(Empresa);
-
     const data = { nome, email, senha, status_cadastro, data_cadastro, data_modificacao_cadastro };
 
     const schema = Yup
@@ -95,9 +86,7 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const empresa = empresaRepository.create(data);
-
     await empresaRepository.save(empresa);
 
     return response
@@ -107,15 +96,34 @@ export default {
   /**
    * Apaga uma empresa, usando o id da mesma
    */
-  async delete(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
-
+  // async delete(request: Request, response: Response, next: NextFunction) {
+  //   const { id } = request.params;
+  //   const empresaRepository = getRepository(Empresa);
+  //   const empresa = await empresaRepository.delete(id);
+  //   return response
+  //     .status(200)
+  //     .json(empresa);
+  // },
+  /**
+   * Muda o status do cadastro do cliente
+   */
+   async muda_status_cadastro(request: Request, response: Response, next: NextFunction) {
+    const { id, status_cadastro, data_modificacao_cadastro } = request.body;
     const empresaRepository = getRepository(Empresa);
+    const data = { status_cadastro, data_modificacao_cadastro };
 
-    const empresa = await empresaRepository.delete(id);
+    const schema = Yup
+      .object()
+      .shape({
+        status_cadastro: valida_status_cadastro,
+        data_modificacao_cadastro: valida_data_modificacao_cadastro,
+      });
+
+    await schema.validate(data, { abortEarly: false });
+    const empresa = await empresaRepository.update(id, data);
 
     return response
-      .status(200)
+      .status(201)
       .json(empresa);
   },
   /**
@@ -123,9 +131,7 @@ export default {
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, email, senha, status_cadastro, data_modificacao_cadastro } = request.body;
-
     const empresaRepository = getRepository(Empresa);
-
     const data = { nome, email, senha, status_cadastro, data_modificacao_cadastro };
 
     const schema = Yup
@@ -139,7 +145,6 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const empresa = await empresaRepository.update(id, data);
 
     return response

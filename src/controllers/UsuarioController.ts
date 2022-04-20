@@ -12,9 +12,7 @@ export default {
    */
   async login(request: Request, response: Response, next: NextFunction) {
     const { email, senha } = request.body;
-
     let existingUser: any;
-
     const usuarioRepository = getRepository(Usuario);
 
     try {
@@ -73,9 +71,7 @@ export default {
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, email, senha, data_cadastro, data_modificacao_cadastro } = request.body;
-
     const usuarioRepository = getRepository(Usuario);
-
     const data = { nome, email, senha, data_cadastro, data_modificacao_cadastro };
 
     const schema = Yup
@@ -89,9 +85,7 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const usuario = usuarioRepository.create(data);
-
     await usuarioRepository.save(usuario);
 
     return response
@@ -115,9 +109,7 @@ export default {
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, email, senha, data_modificacao_cadastro } = request.body;
-
     const usuarioRepository = getRepository(Usuario);
-
     const data = { nome, email, senha, data_modificacao_cadastro };
 
     const schema = Yup
@@ -130,7 +122,6 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const usuario = await usuarioRepository.update(id, data);
 
     return response

@@ -16,9 +16,7 @@ export default {
    */
   async index_catalogo_teste(request: Request, response: Response, next: NextFunction) {
     const refeicaoRepository = getRepository(Refeicao);
-
     const refeicao = await refeicaoRepository.find();
-
     return response.json(refeicaoView.renderMany(refeicao));
   },
   /**
@@ -26,15 +24,11 @@ export default {
    */
   async index(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const refeicaoRepository = getRepository(Refeicao);
-
     const refeicao = await refeicaoRepository.find({
-      // join: {},
-      where: { usuario: { id: id } },
+      where: { usuarioId: id  },
       relations: ['imagens'],
     });
-
     return response.json(refeicaoView.renderMany(refeicao));
   },
   /**
@@ -42,11 +36,8 @@ export default {
    */
   async show(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const refeicaoRepository = getRepository(Refeicao);
-
     const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens'] });
-
     return response.json(refeicaoView.render(refeicao));
   },
   /**
@@ -54,7 +45,6 @@ export default {
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
-
     const refeicaoRepository = getRepository(Refeicao);
 
     const requestImagens = request.files as Express.Multer.File[];
@@ -84,9 +74,7 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const refeicao = refeicaoRepository.create(data);
-
     await refeicaoRepository.save(refeicao);
 
     return response
@@ -98,9 +86,7 @@ export default {
    */
   async delete(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const refeicaoRepository = getRepository(Refeicao);
-
     const refeicao = await refeicaoRepository.delete(id);
 
     return response
@@ -112,7 +98,6 @@ export default {
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, preco, descricao, ativo } = request.body;
-
     const refeicaoRepository = getRepository(Refeicao);
 
     const requestImagens = request.files as Express.Multer.File[];
@@ -120,6 +105,7 @@ export default {
       return { path: imagem.filename };
     });
 
+    /* arrumar, converter de string json */
     const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
     const ingredientes = requestIngredientes.map((ingrediente) => {
       const { nome, quantidade } = ingrediente;
@@ -141,7 +127,6 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const refeicao = await refeicaoRepository.update(id, data);
 
     return response
