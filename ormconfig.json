@@ -5,7 +5,7 @@
   "username": "root",
   "password": "sofia1234",
   "database": "cardapio_app_server",
-  "synchronize": true,
+  "synchronize": false,
   "logging": false,
   "entities": [
      "src/entity/**/*.ts"
