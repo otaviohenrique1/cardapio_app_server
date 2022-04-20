@@ -42,7 +42,7 @@ const pedido_refeicao_1 = {
 
 const pedido_refeicao_2 = {
   id: 2,
-  refeicaoId: 1,
+  refeicaoId: 2,
   quantidade: 1,
   pedidoId: 1
 };
