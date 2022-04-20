@@ -94,28 +94,167 @@ export const valida_path = Yup
   .string()
   .required(GeradorMensagem.GeraMensagemErro('path'));
 
-export const valida_imagens = Yup.array(
-  Yup
-    .object()
-    .shape({
-      path: valida_path
-    })
-);
+export const valida_imagens = Yup
+  .array(
+    Yup
+      .object()
+      .shape({
+        path: valida_path
+      })
+  );
 
-export const valida_lista_ingredientes = Yup.array(
-  Yup
-    .object()
-    .shape({
-      nome: valida_nome,
-      quantidade: valida_quantidade
-    })
-);
+export const valida_lista_ingredientes = Yup
+  .array(
+    Yup
+      .object()
+      .shape({
+        nome: valida_nome,
+        quantidade: valida_quantidade
+      })
+  );
 
-export const valida_lista_refeicoes = Yup.array(
-  Yup
-    .object()
-    .shape({
-      refeicaoId: valida_id,
-      quantidade: valida_quantidade
-    })
-);
+export const valida_lista_refeicoes = Yup
+  .array(
+    Yup
+      .object()
+      .shape({
+        refeicaoId: valida_id,
+        quantidade: valida_quantidade
+      })
+  );
+
+export const valida_criacao_administrador = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_administrador = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    data_modificacao_cadastro: valida_data_cadastro,
+  });
+
+export const valida_criacao_cliente = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    rua: valida_rua,
+    numero: valida_numero,
+    bairro: valida_bairro,
+    cidade: valida_cidade,
+    estado: valida_estado,
+    cep: valida_cep,
+    telefone: valida_telefone,
+    email: valida_email,
+    senha: valida_senha,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_cliente = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    rua: valida_rua,
+    numero: valida_numero,
+    bairro: valida_bairro,
+    cidade: valida_cidade,
+    estado: valida_estado,
+    cep: valida_cep,
+    telefone: valida_telefone,
+    email: valida_email,
+    senha: valida_senha,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_criacao_empresa = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    status_cadastro: valida_status_cadastro,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_empresa = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    status_cadastro: valida_status_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_criacao_pedido = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    status_pedido: valida_status_pedido,
+    preco_total: valida_preco_total,
+    lista_refeicoes: valida_lista_refeicoes,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_pedido = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    status_pedido: valida_status_pedido,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_criacao_refeicao = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    preco: valida_preco,
+    ingredientes: valida_lista_ingredientes,
+    descricao: valida_descricao,
+    ativo: valida_ativo,
+    imagens: valida_imagens,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_refeicao = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    preco: valida_preco,
+    ingredientes: valida_lista_ingredientes,
+    descricao: valida_descricao,
+    ativo: valida_ativo,
+    imagens: valida_imagens,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_criacao_usuario = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    data_cadastro: valida_data_cadastro,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
+
+export const valida_alualizacao_usuario = Yup
+  .object()
+  .shape({
+    nome: valida_nome,
+    email: valida_email,
+    senha: valida_senha,
+    data_modificacao_cadastro: valida_data_modificacao_cadastro,
+  });
