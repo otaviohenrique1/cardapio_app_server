@@ -34,9 +34,7 @@ export default {
   // },
   async login(request: Request, response: Response, next: NextFunction) {
     const { email, senha } = request.body;
-
     let existingUser: any;
-
     const clienteRepository = getRepository(Cliente);
 
     try {
@@ -74,35 +72,28 @@ export default {
       .json({ message: LOGADO_COM_SUCESSO, data_user });
   },
   /**
-   * Listar todas os pedidos cadastrados
+   * Listar todas os clientes cadastrados
    */
   async index(request: Request, response: Response, next: NextFunction) {
     const clienteRepository = getRepository(Cliente);
-
     const cliente = await clienteRepository.find();
-
     return response.json(cliente);
   },
   /**
-   * Busca um pedido cadastrado usando o id do mesmo e exibe os seus dados
+   * Busca um cliente cadastrado usando o id do mesmo e exibe os seus dados
    */
   async show(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
-
     const clienteRepository = getRepository(Cliente);
-
     const cliente = await clienteRepository.findOneOrFail(id);
-
     return response.json(clienteView.render(cliente));
   },
   /**
-   * Cadastra um pedido
+   * Cadastra um cliente
    */
   async create(request: Request, response: Response, next: NextFunction) {
     const { nome, data_cadastro, data_modificacao_cadastro, rua, numero, bairro, cidade, estado, cep, telefone, email, senha } = request.body;
-
     const clienteRepository = getRepository(Cliente);
-
     const data = { nome, data_cadastro, data_modificacao_cadastro, rua, numero, bairro, cidade, estado, cep, telefone, email, senha };
 
     const schema = Yup
@@ -123,9 +114,7 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const cliente = clienteRepository.create(data);
-
     await clienteRepository.save(cliente);
 
     return response
@@ -133,22 +122,22 @@ export default {
       .json(cliente);
   },
   /**
-   * Apaga um pedido, usando o id do mesmo
+   * Apaga um cliente, usando o id do mesmo
    */
   // async delete(request: Request, response: Response, next: NextFunction) {
   //   const { id } = request.params;
   //   const clienteRepository = getRepository(Cliente);
   //   const cliente = await clienteRepository.delete(id);
-  //   return response.status(200).json(cliente);
+  //   return response
+  //     .status(200)
+  //     .json(cliente);
   // },
   /**
-   * Atualiza os dados de um pedido, usando o id do mesmo para busca-lo no banco de dados
+   * Atualiza os dados de um cliente, usando o id do mesmo para busca-lo no banco de dados
    */
   async update(request: Request, response: Response, next: NextFunction) {
     const { id, nome, data_modificacao_cadastro, rua, numero, bairro, cidade, estado, cep, telefone, email, senha } = request.body;
-
     const clienteRepository = getRepository(Cliente);
-
     const data = { nome, data_modificacao_cadastro, rua, numero, bairro, cidade, estado, cep, telefone, email, senha };
 
     const schema = Yup
@@ -168,7 +157,6 @@ export default {
       });
 
     await schema.validate(data, { abortEarly: false });
-
     const cliente = await clienteRepository.update(id, data);
 
     return response

@@ -71,6 +71,7 @@ export default {
     const { nome, email, senha, data_cadastro, data_modificacao_cadastro } = request.body;
     const administradorRepository = getRepository(Administrador);
     const data = { nome, email, senha, data_cadastro, data_modificacao_cadastro };
+
     const schema = Yup.object().shape({
       nome: valida_nome,
       email: valida_email,
@@ -78,10 +79,14 @@ export default {
       data_cadastro: valida_data_cadastro,
       data_modificacao_cadastro: valida_data_modificacao_cadastro,
     });
+
     await schema.validate(data, { abortEarly: false });
     const administrador = administradorRepository.create(data);
     await administradorRepository.save(administrador);
-    return response.status(201).json(administrador);
+
+    return response
+      .status(201)
+      .json(administrador);
   },
   /**
    * Apaga um administrador, usando o id do mesmo
@@ -90,7 +95,9 @@ export default {
     const { id } = request.params;
     const administradorRepository = getRepository(Administrador);
     const administrador = await administradorRepository.delete(id);
-    return response.status(200).json(administrador);
+    return response
+      .status(200)
+      .json(administrador);
   },
   /**
    * Atualiza os dados de um administrador, usando o id do mesmo para busca-lo no banco de dados
@@ -99,14 +106,19 @@ export default {
     const { id, nome, email, senha, data_modificacao_cadastro } = request.body;
     const administradorRepository = getRepository(Administrador);
     const data = { nome, email, senha, data_modificacao_cadastro };
+
     const schema = Yup.object().shape({
       nome: valida_nome,
       email: valida_email,
       senha: valida_senha,
       data_modificacao_cadastro: valida_data_cadastro,
     });
+
     await schema.validate(data, { abortEarly: false });
     const administrador = await administradorRepository.update(id, data);
-    return response.status(201).json(administrador);
+
+    return response
+      .status(201)
+      .json(administrador);
   },
 };
