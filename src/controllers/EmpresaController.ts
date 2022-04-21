@@ -96,7 +96,7 @@ export async function muda_status_cadastro(request: Request, response: Response,
 /**
  * Atualiza os dados de uma empresa, usando o id da mesma para busca-lo no banco de dados
  */
-export async function atualizar_empresa(request: Request, response: Response, next: NextFunction) {
+export async function atualizar_empresas(request: Request, response: Response, next: NextFunction) {
   const { id, nome, email, senha, status_cadastro, data_modificacao_cadastro } = request.body;
   const empresaRepository = getRepository(Empresa);
   const data = { nome, email, senha, status_cadastro, data_modificacao_cadastro };

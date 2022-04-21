@@ -63,7 +63,7 @@ export async function login_cliente(request: Request, response: Response, next: 
 /**
  * Listar todas os clientes cadastrados
  */
-export async function listar_cliente(request: Request, response: Response, next: NextFunction) {
+export async function listar_clientes(request: Request, response: Response, next: NextFunction) {
   const clienteRepository = getRepository(Cliente);
   const cliente = await clienteRepository.find();
   return response.json(cliente);

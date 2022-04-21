@@ -42,7 +42,7 @@ export async function login_administrador(request: Request, response: Response, 
 /**
  * Listar todas os administradores cadastrados
  */
-export async function listar_administrador(request: Request, response: Response, next: NextFunction) {
+export async function listar_administradores(request: Request, response: Response, next: NextFunction) {
   const administradorRepository = getRepository(Administrador);
   const administrador = await administradorRepository.find();
   return response.json(administrador);

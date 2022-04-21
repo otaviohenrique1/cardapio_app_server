@@ -40,7 +40,7 @@ export async function login_usuario(request: Request, response: Response, next: 
 /**
  * Listar todas os usuarios cadastrados
  */
-export async function listar_usuario(request: Request, response: Response, next: NextFunction) {
+export async function listar_usuarios(request: Request, response: Response, next: NextFunction) {
   const usuarioRepository = getRepository(Usuario);
   const usuario = await usuarioRepository.find();
   return response.json(usuario);

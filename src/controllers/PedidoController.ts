@@ -12,7 +12,7 @@ interface PedidoRefeicaoTypes {
 /**
  * Listar todas os pedidos cadastrados
  */
-export async function listar_pedido(request: Request, response: Response, next: NextFunction) {
+export async function listar_pedidos(request: Request, response: Response, next: NextFunction) {
   const pedidoRepository = getRepository(Pedido);
   const pedido = await pedidoRepository.find();
   return response.json(pedido);
