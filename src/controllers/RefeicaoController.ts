@@ -12,7 +12,7 @@ interface IngredienteTypes {
 /**
  * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
  */
-export async function listar_refeicao(request: Request, response: Response, next: NextFunction) {
+export async function listar_refeicoes(request: Request, response: Response, next: NextFunction) {
   const { id } = request.params;
   const refeicaoRepository = getRepository(Refeicao);
   const refeicao = await refeicaoRepository.find({
@@ -28,7 +28,9 @@ export async function listar_refeicao(request: Request, response: Response, next
 export async function busca_refeicao(request: Request, response: Response, next: NextFunction) {
   const { id } = request.params;
   const refeicaoRepository = getRepository(Refeicao);
-  const refeicao = await refeicaoRepository.findOneOrFail(id, { relations: ['imagens', 'ingredientes'] });
+  const refeicao = await refeicaoRepository.findOneOrFail(id,
+    { relations: ['imagens', 'ingredientes'] }
+  );
   return response.json(refeicaoView.render(refeicao));
 }
 
