@@ -69,7 +69,7 @@ export async function criar_usuario(request: Request, response: Response, next: 
   await usuarioRepository.save(usuario);
 
   return response.status(201).json(usuario);
-  }
+}
 
 /**
  * Atualiza os dados de um usuario, usando o id do mesmo para busca-lo no banco de dados
