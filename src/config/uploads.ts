@@ -3,9 +3,11 @@ import multer from "multer";
 import path from "path";
 import crypto from 'crypto';
 // import fs from "fs";
-// import { slug } from "./utils";
 
-/* arrumar parte do nome do arquivo */
+/*
+  Usar mkdirSync apenas se o diretório não existir
+  O existsSync retorna um booleano
+*/
 export default {
   storage: multer.diskStorage({
     destination: function (request, file, cb) {
@@ -49,7 +51,4 @@ export default {
     }
   })
 }
-*/
-/*
-Você deve usar mkdirSync apenas se o diretório não existir (você pode existsSync funcionar que retorna um booleano).
 */
