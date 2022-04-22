@@ -38,7 +38,8 @@ export async function busca_refeicao(request: Request, response: Response, next:
  * Cadastrada uma refeicao
  */
 export async function criar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro } = request.body;
+  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro, ingredientes, usuario_id } = request.body;
+
   const refeicaoRepository = getRepository(Refeicao);
 
   const requestImagens = request.files as Express.Multer.File[];
@@ -46,13 +47,16 @@ export async function criar_refeicao(request: Request, response: Response, next:
     return { path: imagem.filename };
   });
 
-  const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
-  const ingredientes = requestIngredientes.map((ingrediente) => {
-    const { nome, quantidade } = ingrediente;
-    return { nome, quantidade };
-  });
+  const ingredientes_lista = JSON.parse(ingredientes);
 
-  const data = { nome, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens };
+  console.log("ativo => ", ativo);
+
+  const data = {
+    nome, preco, descricao, ativo,
+    data_cadastro, data_modificacao_cadastro, imagens,
+    ingredientes: ingredientes_lista,
+    usuarioId: usuario_id
+  };
 
   await valida_criacao_refeicao.validate(data, { abortEarly: false });
   const refeicao = refeicaoRepository.create(data);
