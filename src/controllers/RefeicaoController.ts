@@ -91,7 +91,10 @@ export async function atualizar_refeicao(request: Request, response: Response, n
 
   let imagens_removidas = imagens_antigas as FotoType[];
 
-  
+  let imagens_removidas_formatada = imagens_removidas.map((item) => {
+    const { id, nome } = item;
+    return { id, path: nome };
+  });
 
   const requestImagens = request.files as Express.Multer.File[];
   const imagens = requestImagens.map((imagem) => {
