@@ -1,8 +1,13 @@
 /* Porta */
 export const PORT: number = 3333;
 
+/* Host */
+export const HOST = 'localhost';
+
 /* Pasta uploads destino */
-export const MULTER_OPTIONS_DEST: string = '/uploads/';
+export const UPLOADS_PASTA = 'uploads';
+export const FOTOS_PASTA = 'fotos';
+export const URL_CAMINHO = `http://${HOST}:${PORT}/${UPLOADS_PASTA}/${FOTOS_PASTA}/`
 
 /* Formatos de data e hora */
 export const FORMATO_HORA_1 = 'HH:mm';
