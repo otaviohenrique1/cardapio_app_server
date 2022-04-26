@@ -76,12 +76,22 @@ export async function apagar_refeicao(request: Request, response: Response, next
   return response.status(200).json(refeicao);
 }
 
+interface FotoType {
+  id: number;
+  url: string;
+  nome: string;
+}
+
 /**
  * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
  */
 export async function atualizar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { id, nome, preco, descricao, ativo } = request.body;
+  const { id, nome, preco, descricao, ativo, imagens_antigas } = request.body;
   const refeicaoRepository = getRepository(Refeicao);
+
+  let imagens_removidas = imagens_antigas as FotoType[];
+
+  
 
   const requestImagens = request.files as Express.Multer.File[];
   const imagens = requestImagens.map((imagem) => {
