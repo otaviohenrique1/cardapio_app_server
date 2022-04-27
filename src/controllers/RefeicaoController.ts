@@ -49,7 +49,7 @@ export async function criar_refeicao(request: Request, response: Response, next:
 
   const ingredientes_lista = JSON.parse(ingredientes);
 
-  console.log("ativo => ", ativo);
+  // console.log("ativo => ", ativo);
 
   const data = {
     nome, preco, descricao, ativo,
@@ -101,7 +101,6 @@ export async function atualizar_refeicao(request: Request, response: Response, n
     return { path: imagem.filename };
   });
 
-  /* arrumar, converter de string json */
   const requestIngredientes = request.body.ingredientes as IngredienteTypes[];
   const ingredientes = requestIngredientes.map((ingrediente) => {
     const { nome, quantidade } = ingrediente;
