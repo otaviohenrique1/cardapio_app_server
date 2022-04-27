@@ -27,7 +27,10 @@ export class createUsuario1643649869079 implements MigrationInterface {
       .insert()
       .into(Usuario)
       .values([
-        usuario_1, usuario_2, usuario_3, usuario_4
+        usuario_1,
+        usuario_2,
+        usuario_3,
+        usuario_4
       ])
       .execute();
   }

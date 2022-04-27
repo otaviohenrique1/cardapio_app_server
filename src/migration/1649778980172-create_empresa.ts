@@ -28,7 +28,12 @@ export class createEmpresa1649778980172 implements MigrationInterface {
       .insert()
       .into(Empresa)
       .values([
-        empresa_1, empresa_2
+        empresa_1,
+        empresa_2,
+        empresa_3,
+        empresa_4,
+        empresa_5,
+        empresa_6
       ])
       .execute();
   }
@@ -56,6 +61,50 @@ const empresa_2 = {
   senha: FormatadorCrypto.mensagemSHA512('9876543210'),
   status_cadastro: true,
   codigo: 'cf765dad-140b-4cff-9ffd-f33a83ed81aa',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date(),
+};
+
+const empresa_3 = {
+  id: 3,
+  nome: 'Pirata lanches',
+  email: 'piratalanches@email.com',
+  senha: FormatadorCrypto.mensagemSHA512('0123456789'),
+  status_cadastro: true,
+  codigo: 'e1c1c2f4-7791-4922-85e5-b899eb5fc29d',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date(),
+};
+
+const empresa_4 = {
+  id: 4,
+  nome: 'Burguer lanches',
+  email: 'burguerlanches@email.com',
+  senha: FormatadorCrypto.mensagemSHA512('0123456789'),
+  status_cadastro: true,
+  codigo: 'dbff0794-d3ef-41c6-ac21-7f6cd15ab6ac',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date(),
+};
+
+const empresa_5 = {
+  id: 5,
+  nome: 'Restaurante praiano',
+  email: 'restaurantepraiano@email.com',
+  senha: FormatadorCrypto.mensagemSHA512('0123456789'),
+  status_cadastro: true,
+  codigo: '2b3b0135-8567-40ef-93b5-8bbb4519db5a',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date(),
+};
+
+const empresa_6 = {
+  id: 6,
+  nome: 'Piramide',
+  email: 'piramide@email.com',
+  senha: FormatadorCrypto.mensagemSHA512('0123456789'),
+  status_cadastro: true,
+  codigo: '1adf4326-b076-43f7-8f53-f7748c3922a3',
   data_cadastro: new Date(),
   data_modificacao_cadastro: new Date(),
 };

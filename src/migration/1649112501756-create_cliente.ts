@@ -34,7 +34,12 @@ export class createCliente1649112501756 implements MigrationInterface {
       .insert()
       .into(Cliente)
       .values([
-        cliente_1, cliente_2
+        cliente_1,
+        cliente_2,
+        cliente_3,
+        cliente_4,
+        cliente_5,
+        cliente_6
       ])
       .execute();
   }
@@ -72,6 +77,74 @@ const cliente_2 = {
   numero: 'São Paulo',
   bairro: '12630000',
   cidade: 'ana@asdasd.com',
+  estado: FormatadorCrypto.mensagemSHA512('9876543210'),
+  cep: '12999957995994',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date()
+};
+
+const cliente_3 = {
+  id: 3,
+  nome: 'Maria',
+  codigo: '5c66d441-9165-4132-9858-801a0fa4e731',
+  email: 'Rua do centro',
+  senha: '50',
+  telefone: 'Centro',
+  rua: 'Cachoeira Paulista',
+  numero: 'São Paulo',
+  bairro: '12630000',
+  cidade: 'maria@email.com',
+  estado: FormatadorCrypto.mensagemSHA512('0123456789'),
+  cep: '12999999999999',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date()
+};
+
+const cliente_4 = {
+  id: 4,
+  nome: 'Joana',
+  codigo: '4d7b9059-e76b-49b2-ba4e-9d9af999941b',
+  email: 'Rua do centro',
+  senha: '78',
+  telefone: 'Centro',
+  rua: 'Cachoeira Paulista',
+  numero: 'São Paulo',
+  bairro: '12630000',
+  cidade: 'joana@asdasd.com',
+  estado: FormatadorCrypto.mensagemSHA512('9876543210'),
+  cep: '12999957995994',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date()
+};
+
+const cliente_5 = {
+  id: 5,
+  nome: 'Mario',
+  codigo: 'e0ca10c7-b166-4250-8ba9-e06382cb0d90',
+  email: 'Rua do centro',
+  senha: '50',
+  telefone: 'Centro',
+  rua: 'Cachoeira Paulista',
+  numero: 'São Paulo',
+  bairro: '12630000',
+  cidade: 'mario@email.com',
+  estado: FormatadorCrypto.mensagemSHA512('0123456789'),
+  cep: '12999999999999',
+  data_cadastro: new Date(),
+  data_modificacao_cadastro: new Date()
+};
+
+const cliente_6 = {
+  id: 6,
+  nome: 'Luiza',
+  codigo: 'f47caf07-86d6-463c-8d4b-bf60a8f0311e',
+  email: 'Rua do centro',
+  senha: '78',
+  telefone: 'Centro',
+  rua: 'Cachoeira Paulista',
+  numero: 'São Paulo',
+  bairro: '12630000',
+  cidade: 'luiza@asdasd.com',
   estado: FormatadorCrypto.mensagemSHA512('9876543210'),
   cep: '12999957995994',
   data_cadastro: new Date(),
