@@ -3,6 +3,7 @@ import { getRepository } from "typeorm";
 import { valida_alualizacao_refeicao, valida_criacao_refeicao } from "../utils/SchemasValidacao";
 import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
+import { Imagem } from "../entity/Imagem";
 
 interface IngredienteTypes {
   nome: string;
@@ -86,15 +87,15 @@ interface FotoType {
  * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
  */
 export async function atualizar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { id, nome, preco, descricao, ativo, imagens_antigas } = request.body;
+  const { id, nome, preco, descricao, ativo, imagens_removidas } = request.body;
   const refeicaoRepository = getRepository(Refeicao);
 
-  let imagens_removidas = imagens_antigas as FotoType[];
-
-  let imagens_removidas_formatada = imagens_removidas.map((item) => {
-    const { id, nome } = item;
-    return { id, path: nome };
-  });
+  /* Testar */
+  let lista_imagens_removidas = (imagens_removidas as FotoType[]);
+  const imagemRepository = getRepository(Imagem);
+  lista_imagens_removidas.forEach(async (item) => {
+    await imagemRepository.delete(item.id);
+  })
 
   const requestImagens = request.files as Express.Multer.File[];
   const imagens = requestImagens.map((imagem) => {
