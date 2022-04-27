@@ -4,7 +4,8 @@ import { valida_alualizacao_refeicao, valida_criacao_refeicao } from "../utils/S
 import Refeicao from "../entity/Refeicao";
 import refeicaoView from "../views/RefeicaoView";
 import { Imagem } from "../entity/Imagem";
-
+import fs from "fs";
+import path from "path";
 interface IngredienteTypes {
   nome: string;
   quantidade: number;
@@ -95,6 +96,10 @@ export async function atualizar_refeicao(request: Request, response: Response, n
   const imagemRepository = getRepository(Imagem);
   lista_imagens_removidas.forEach(async (item) => {
     await imagemRepository.delete(item.id);
+    const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
+    fs.unlink(`${fileDestination}${item.nome}`, (error) => {
+      if (error) { console.log(error); } else { console.log("Arquivo apagado"); }
+    });
   })
 
   const requestImagens = request.files as Express.Multer.File[];
