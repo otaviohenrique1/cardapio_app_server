@@ -98,7 +98,12 @@ export async function atualizar_refeicao(request: Request, response: Response, n
     await imagemRepository.delete(item.id);
     const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
     fs.unlink(`${fileDestination}${item.nome}`, (error) => {
-      if (error) { console.log(error); } else { console.log("Arquivo apagado"); }
+      if (error) {
+        console.log(error);
+      }
+      // else { 
+      //   console.log("Arquivo apagado");
+      // }
     });
   })
 
