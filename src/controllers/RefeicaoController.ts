@@ -73,6 +73,25 @@ export async function criar_refeicao(request: Request, response: Response, next:
 export async function apagar_refeicao(request: Request, response: Response, next: NextFunction) {
   const { id } = request.params;
   const refeicaoRepository = getRepository(Refeicao);
+  const imagemRepository = getRepository(Imagem);
+
+  const imagem = await imagemRepository.find({
+    where: { refeicaoId: id },
+  });
+
+  imagem.forEach(async (item) => {
+    const fileDestination = path.join(__dirname, '..', '..', 'uploads', 'fotos');
+    fs.unlink(`${fileDestination}${item.path}`, (error) => {
+      if (error) {
+        console.log(error);
+      }
+      // else { 
+      //   console.log("Arquivo apagado");
+      // }
+    });
+    await imagemRepository.delete(item.refeicaoId);
+  })
+
   const refeicao = await refeicaoRepository.delete(id);
 
   return response.status(200).json(refeicao);
@@ -105,7 +124,7 @@ export async function atualizar_refeicao(request: Request, response: Response, n
       //   console.log("Arquivo apagado");
       // }
     });
-  })
+  });
 
   const requestImagens = request.files as Express.Multer.File[];
   const imagens = requestImagens.map((imagem) => {
