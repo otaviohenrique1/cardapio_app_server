@@ -33,13 +33,21 @@ import { valida_alualizacao_cliente, valida_criacao_cliente } from "../utils/Sch
 
 export async function login_cliente(request: Request, response: Response, next: NextFunction) {
   const { email, senha } = request.body;
+  // console.log("senha => ", senha);
+  // console.log("email => ", email);
+
   let existingUser: any;
   const clienteRepository = getRepository(Cliente);
 
   try {
-    existingUser = await clienteRepository.findOne({ email: email });
+    existingUser = await clienteRepository.findOne({ email: request.body.email });
+    // console.log("achou o email");
+    // console.log("existingUser => ", existingUser);
   } catch (error) {
-    return response.status(500).json({ message: LOGIN_INVALIDO });
+    return response.status(500).json({ 
+      message: LOGIN_INVALIDO,
+      error: error
+    });
   }
 
   if (!existingUser) {
@@ -83,16 +91,43 @@ export async function busca_cliente(request: Request, response: Response, next: 
  * Cadastra um cliente
  */
 export async function criar_cliente(request: Request, response: Response, next: NextFunction) {
-  const { nome, email, senha, rua, numero, bairro, cidade, estado, cep,
-    telefone, data_cadastro, data_modificacao_cadastro } = request.body;
+  // const { nome, email, senha, rua, numero, bairro, cidade, estado, cep,
+  //   telefone, data_cadastro, data_modificacao_cadastro } = request.body;
+  // const data = {
+  //   nome, email, senha, rua, numero, bairro, cidade, estado,
+  //   cep, telefone, data_cadastro, data_modificacao_cadastro
+  // };
+  
   const clienteRepository = getRepository(Cliente);
-  const data = {
-    nome, email, senha, rua, numero, bairro, cidade, estado,
-    cep, telefone, data_cadastro, data_modificacao_cadastro
-  };
+  await valida_criacao_cliente.validate({
+    nome: request.body.nome,
+    email: request.body.email,
+    senha: request.body.senha,
+    rua: request.body.rua,
+    numero: request.body.numero,
+    bairro: request.body.bairro,
+    cidade: request.body.cidade,
+    estado: request.body.estado,
+    cep: request.body.cep,
+    telefone: request.body.telefone,
+    data_cadastro: request.body.data_cadastro,
+    data_modificacao_cadastro: request.body.data_modificacao_cadastro,
+  }, { abortEarly: false });
 
-  await valida_criacao_cliente.validate(data, { abortEarly: false });
-  const cliente = clienteRepository.create(data);
+  const cliente = clienteRepository.create({
+    nome: request.body.nome,
+    email: request.body.email,
+    senha: request.body.senha,
+    rua: request.body.rua,
+    numero: request.body.numero,
+    bairro: request.body.bairro,
+    cidade: request.body.cidade,
+    estado: request.body.estado,
+    cep: request.body.cep,
+    telefone: request.body.telefone,
+    data_cadastro: request.body.data_cadastro,
+    data_modificacao_cadastro: request.body.data_modificacao_cadastro,
+  });
   await clienteRepository.save(cliente);
 
   return response.status(201).json(cliente);
