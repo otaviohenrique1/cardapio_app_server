@@ -7,17 +7,20 @@ export class Cliente extends BaseEntity {
   id: number;
 
   @Column()
+  @Generated('uuid')
+  codigo: string;
+
+  @Column()
   nome: string;
 
   @Column()
-  @Generated('uuid')
-  codigo: string;
-  
-  @Column()
-  data_cadastro: Date;
+  email: string;
 
   @Column()
-  data_modificacao_cadastro: Date;
+  senha: string;
+
+  @Column()
+  telefone: string;
 
   @Column()
   rua: string;
@@ -38,13 +41,10 @@ export class Cliente extends BaseEntity {
   cep: string;
 
   @Column()
-  telefone: string;
+  data_cadastro: Date;
 
   @Column()
-  email: string;
-
-  @Column()
-  senha: string;
+  data_modificacao_cadastro: Date;
 
   /* 1 ou mais pedidos para 1 cliente */
   @OneToMany(() => Pedido, pedido => pedido.cliente)
