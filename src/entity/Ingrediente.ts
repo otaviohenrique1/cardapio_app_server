@@ -11,6 +11,22 @@ export class Ingrediente extends BaseEntity {
 
   @Column()
   quantidade: number;
+
+  /*
+  @Column()
+  removivel: string; ('Removivel' e 'Não removivel')
+  ou
+  @Column()
+  removivel: boolean;
+  */
+
+  /*
+  @Column()
+  opcional: string; ('Opcional' e 'Não opcional')
+  ou
+  @Column()
+  opcional: boolean;
+  */
   
   /* 1 ou mais ingredientes para 1 refeicao */
   @ManyToOne(() => Refeicao, refeicao => refeicao.ingredientes)
