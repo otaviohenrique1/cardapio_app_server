@@ -8,10 +8,10 @@ export class Pedido extends BaseEntity {
   id: number;
 
   @Column()
-  status_pedido: string;
+  status_pedido: string; // 'em produção', 'em transporte' e 'entregue'
 
   @Column()
-  preco_total: number;
+  preco_total: number; // Preco de cada refeicao e cada opcional acicionado
 
   @Column()
   @Generated('uuid')
@@ -23,6 +23,9 @@ export class Pedido extends BaseEntity {
   @Column()
   data_modificacao_cadastro: Date;
   
+  // @Column()
+  // observacao: string;
+
   /* 1 pedido para 1 cliente */
   @OneToMany(() => Cliente, cliente => cliente.pedidos, {
     cascade: ['insert']
