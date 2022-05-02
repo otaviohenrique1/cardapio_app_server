@@ -142,16 +142,38 @@ export const coluna_preco = CriaColunaTabela({
   scale: 2,
 });
 
+/* ver se vai mudar o nome da coluna para status ou situacao */
 export const coluna_ativo = CriaColunaTabela({
   name: 'ativo',
   type: 'boolean',
   isNullable: false,
 });
 
+export const coluna_status_refeicao_bebida = CriaColunaTabela({
+  name: 'situacao_refeicao_bebida',
+  type: 'varchar',
+  isNullable: false,
+  length: '255'
+});
+
 export const coluna_descricao = CriaColunaTabela({
   name: 'descricao',
   type: 'text',
   isNullable: false,
+});
+
+export const coluna_unidade_quantidade = CriaColunaTabela({
+  name: 'unidade_quantidade',
+  type: 'varchar',
+  isNullable: false,
+  length: '255'
+});
+
+export const coluna_bebida_tipo = CriaColunaTabela({
+  name: 'bebida_tipo',
+  type: 'varchar',
+  isNullable: false,
+  length: '255'
 });
 
 export const coluna_clienteId = CriaColunaTabela({
@@ -174,6 +196,12 @@ export const coluna_usuarioId = CriaColunaTabela({
 
 export const coluna_pedidoId = CriaColunaTabela({
   name: 'pedidoId',
+  type: 'integer',
+  unsigned: true,
+});
+
+export const coluna_pedidoRefeicaoId = CriaColunaTabela({
+  name: 'pedidoRefeicaoId',
   type: 'integer',
   unsigned: true,
 });
