@@ -12,20 +12,15 @@ export class Ingrediente extends BaseEntity {
   @Column()
   quantidade: number;
 
-  /*
   @Column()
-  removivel: string; ('Removivel' e 'Não removivel')
-  ou
+  unidade_quantidade: string; // unidade, ml, l, mg, g, kg
+  
   @Column()
   removivel: boolean;
-  */
-
+  
   /*
   @Column()
-  opcional: string; ('Opcional' e 'Não opcional')
-  ou
-  @Column()
-  opcional: boolean;
+  removivel: string; // ('Removivel' e 'Não removivel')
   */
   
   /* 1 ou mais ingredientes para 1 refeicao */

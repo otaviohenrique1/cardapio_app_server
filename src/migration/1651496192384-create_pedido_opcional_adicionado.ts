@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-import { if_table_not_exist, coluna_primary_key, coluna_nome, coluna_preco, coluna_pedidoRefeicaoId } from "../utils/constantes_migration";
+import { if_table_not_exist, coluna_primary_key, coluna_nome, coluna_preco, coluna_pedidoRefeicaoId, coluna_refeicaoId } from "../utils/constantes_migration";
 
 const NOME_TABELA = 'pedido_opcional_adicionado';
 export class createPedidoOpcionalAdicionado1651496192384 implements MigrationInterface {
@@ -12,6 +12,7 @@ export class createPedidoOpcionalAdicionado1651496192384 implements MigrationInt
         coluna_nome,
         coluna_preco,
         coluna_pedidoRefeicaoId,
+        coluna_refeicaoId,
       ],
     }), if_table_not_exist);
   }

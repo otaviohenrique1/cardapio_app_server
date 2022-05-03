@@ -6,7 +6,7 @@ export default {
     const {
       id, codigo, nome, rua, numero, bairro, cidade,
       estado, email, senha, cep, telefone, pedidos,
-      data_cadastro, data_modificacao_cadastro
+      data_cadastro, data_modificacao_cadastro, empresaId
     } = cliente;
 
     const lista_pedidos = PedidoView.renderMany(pedidos);
@@ -14,7 +14,7 @@ export default {
     return {
       id, codigo, nome, rua, numero, bairro, cidade,
       estado, email, senha, cep, pedidos: lista_pedidos,
-      telefone, data_cadastro, data_modificacao_cadastro,
+      telefone, data_cadastro, data_modificacao_cadastro, empresaId
     };
   },
 

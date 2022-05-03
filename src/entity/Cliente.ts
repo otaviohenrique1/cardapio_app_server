@@ -1,4 +1,5 @@
-import {BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import Empresa from "./Empresa";
 import { Pedido } from "./Pedido";
 
 @Entity('cliente')
@@ -49,4 +50,12 @@ export class Cliente extends BaseEntity {
   /* 1 ou mais pedidos para 1 cliente */
   @OneToMany(() => Pedido, pedido => pedido.cliente)
   pedidos: Pedido[];
+
+  /* muitos clientes cadastrados para 1 empresa  */
+  @ManyToOne(() => Empresa, (empresa) => empresa.clientes)
+  @JoinColumn({ name: 'empresaId' })
+  empresa: Empresa;
+
+  @Column({ type: 'integer', unsigned: true })
+  empresaId: number;
 }

@@ -1,4 +1,4 @@
-import { Empresa } from "../entity/Empresa";
+import Empresa from "../entity/Empresa";
 
 export default {
   render(empresa: Empresa) {
@@ -6,13 +6,12 @@ export default {
       id, nome, email, senha, codigo, status_cadastro,
       data_cadastro, data_modificacao_cadastro
     } = empresa;
-
     return {
       id, nome, email, senha, codigo, status_cadastro,
       data_cadastro, data_modificacao_cadastro
     };
   },
-  renderMany(empresas: Empresa[]) {
-    return empresas.map(empresa => this.render(empresa));
+  renderMany(Empresas: Empresa[]) {
+    return Empresas.map(empresa => this.render(empresa));
   }
 };

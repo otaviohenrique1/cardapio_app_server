@@ -1,6 +1,6 @@
 import { getConnection, MigrationInterface, QueryRunner, Table } from "typeorm";
 import Refeicao from "../entity/Refeicao";
-import { coluna_ativo, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_descricao, coluna_nome, coluna_preco, coluna_primary_key, coluna_usuarioId, if_table_not_exist } from "../utils/constantes_migration";
+import { coluna_ativo, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_descricao, coluna_nome, coluna_preco, coluna_primary_key, coluna_quantidade, coluna_tipo_produto, coluna_unidade_quantidade, coluna_empresaId, if_table_not_exist } from "../utils/constantes_migration";
 
 const NOME_TABELA = 'refeicao';
 
@@ -16,9 +16,12 @@ export class createRefeicao1643649909282 implements MigrationInterface {
         coluna_ativo,
         coluna_codigo,
         coluna_descricao,
+        coluna_quantidade,
+        coluna_unidade_quantidade,
+        coluna_tipo_produto,
         coluna_data_cadastro,
         coluna_data_modificacao_cadastro,
-        coluna_usuarioId,
+        coluna_empresaId,
       ],
     }), if_table_not_exist);
 

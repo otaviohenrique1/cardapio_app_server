@@ -49,6 +49,12 @@ export const coluna_status_cadastro = CriaColunaTabela({
   isNullable: false,
 });
 
+export const coluna_ingrediente_removivel = CriaColunaTabela({
+  name: 'ingrediente_removivel',
+  type: 'boolean',
+  isNullable: false,
+});
+
 export const coluna_data_cadastro = CriaColunaTabela({
   name: 'data_cadastro',
   type: 'datetime'
@@ -169,8 +175,8 @@ export const coluna_unidade_quantidade = CriaColunaTabela({
   length: '255'
 });
 
-export const coluna_bebida_tipo = CriaColunaTabela({
-  name: 'bebida_tipo',
+export const coluna_tipo_produto = CriaColunaTabela({
+  name: 'tipo_produto',
   type: 'varchar',
   isNullable: false,
   length: '255'
@@ -188,7 +194,7 @@ export const coluna_refeicaoId = CriaColunaTabela({
   unsigned: true,
 });
 
-export const coluna_usuarioId = CriaColunaTabela({
+export const coluna_empresaId = CriaColunaTabela({
   name: 'usuarioId',
   type: 'integer',
   unsigned: true,
@@ -202,6 +208,12 @@ export const coluna_pedidoId = CriaColunaTabela({
 
 export const coluna_pedidoRefeicaoId = CriaColunaTabela({
   name: 'pedidoRefeicaoId',
+  type: 'integer',
+  unsigned: true,
+});
+
+export const coluna_administradorId = CriaColunaTabela({
+  name: 'administradorId',
   type: 'integer',
   unsigned: true,
 });

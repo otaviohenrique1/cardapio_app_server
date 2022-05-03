@@ -74,9 +74,21 @@ export const valida_preco_total = Yup
   .number()
   .required(GeradorMensagem.GeraMensagemErro('preco_total'));
 
-export const valida_ingredientes = Yup
+export const valida_quantidade = Yup
   .string()
-  .required(GeradorMensagem.GeraMensagemErro('ingredientes'));
+  .required(GeradorMensagem.GeraMensagemErro('nome'));
+
+export const valida_quantidade_unidade = Yup
+  .number()
+  .required(GeradorMensagem.GeraMensagemErro('quantidade_unidade'));
+
+export const valida_tipo_produto = Yup
+  .string()
+  .required(GeradorMensagem.GeraMensagemErro('tipo_produto'));
+
+// export const valida_ingredientes = Yup
+//   .string()
+//   .required(GeradorMensagem.GeraMensagemErro('ingredientes'));
 
 export const valida_descricao = Yup
   .string()
@@ -86,9 +98,9 @@ export const valida_ativo = Yup
   .boolean()
   .required(GeradorMensagem.GeraMensagemErro('ativo'));
 
-export const valida_quantidade = Yup
-  .number()
-  .required(GeradorMensagem.GeraMensagemErro('quantidade'));
+export const valida_ingrediente_removivel = Yup
+  .boolean()
+  .required(GeradorMensagem.GeraMensagemErro('ingrediente_removivel'));
 
 export const valida_path = Yup
   .string()
@@ -109,7 +121,28 @@ export const valida_lista_ingredientes = Yup
       .object()
       .shape({
         nome: valida_nome,
-        quantidade: valida_quantidade
+        quantidade: valida_quantidade,
+        quantidade_unidade: valida_quantidade_unidade,
+        ingrediente_removivel: valida_ingrediente_removivel
+  })
+  );
+
+export const valida_lista_pedido_ingredientes_removidos = Yup
+  .array(
+    Yup
+      .object()
+      .shape({
+        nome: valida_nome,
+      })
+  );
+
+export const valida_lista_pedido_opcionais_adicionados = Yup
+  .array(
+    Yup
+      .object()
+      .shape({
+        nome: valida_nome,
+        preco: valida_preco,
       })
   );
 
@@ -186,7 +219,7 @@ export const valida_criacao_empresa = Yup
     data_modificacao_cadastro: valida_data_modificacao_cadastro,
   });
 
-export const valida_alualizacao_empresa = Yup
+export const valida_atualizacao_empresa = Yup
   .object()
   .shape({
     nome: valida_nome,
@@ -224,6 +257,9 @@ export const valida_criacao_refeicao = Yup
     descricao: valida_descricao,
     ativo: valida_ativo,
     imagens: valida_imagens,
+    quantidade: valida_quantidade,
+    quantidade_unidade: valida_quantidade_unidade,
+    tipo_produto: valida_tipo_produto,
     data_cadastro: valida_data_cadastro,
     data_modificacao_cadastro: valida_data_modificacao_cadastro,
   });
@@ -240,21 +276,21 @@ export const valida_alualizacao_refeicao = Yup
     data_modificacao_cadastro: valida_data_modificacao_cadastro,
   });
 
-export const valida_criacao_usuario = Yup
-  .object()
-  .shape({
-    nome: valida_nome,
-    email: valida_email,
-    senha: valida_senha,
-    data_cadastro: valida_data_cadastro,
-    data_modificacao_cadastro: valida_data_modificacao_cadastro,
-  });
+// export const valida_criacao_empresa = Yup
+//   .object()
+//   .shape({
+//     nome: valida_nome,
+//     email: valida_email,
+//     senha: valida_senha,
+//     data_cadastro: valida_data_cadastro,
+//     data_modificacao_cadastro: valida_data_modificacao_cadastro,
+//   });
 
-export const valida_alualizacao_usuario = Yup
-  .object()
-  .shape({
-    nome: valida_nome,
-    email: valida_email,
-    senha: valida_senha,
-    data_modificacao_cadastro: valida_data_modificacao_cadastro,
-  });
+// export const valida_alualizacao_empresa = Yup
+//   .object()
+//   .shape({
+//     nome: valida_nome,
+//     email: valida_email,
+//     senha: valida_senha,
+//     data_modificacao_cadastro: valida_data_modificacao_cadastro,
+//   });

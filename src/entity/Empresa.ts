@@ -1,7 +1,10 @@
-import { BaseEntity, Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity, ManyToOne, JoinColumn } from "typeorm";
+import { Administrador } from "./Administrador";
+import { Cliente } from "./Cliente";
+import Refeicao from "./Refeicao";
 
 @Entity('empresa')
-export class Empresa extends BaseEntity {
+export default class Empresa extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,17 +16,32 @@ export class Empresa extends BaseEntity {
   codigo: string;
 
   @Column()
+  data_cadastro: Date;
+
+  @Column()
+  data_modificacao_cadastro: Date;
+  
+  @Column()
   email: string;
 
   @Column()
   senha: string;
 
   @Column()
-  status_cadastro: boolean;
+  status_cadastro: boolean; // 'Ativo' ou 'Inativo'
+  
+  @OneToMany(() => Refeicao, (refeicao) => refeicao.empresa)
+  refeicoes: Refeicao[];
 
-  @Column()
-  data_cadastro: Date;
+  /* muitas empresas cadastradas por 1 administrador  */
+  @ManyToOne(() => Administrador, (administrador) => administrador.empresas)
+  @JoinColumn({ name: 'administradorId' })
+  administrador: Administrador;
 
-  @Column()
-  data_modificacao_cadastro: Date;
+  @Column({ type: 'integer', unsigned: true })
+  administradorId: number;
+
+  /* 1 empresa para muitos clientes */
+  @OneToMany(() => Cliente, (cliente) => cliente.empresa)
+  clientes: Cliente[];
 }

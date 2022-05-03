@@ -31,18 +31,15 @@ import { valida_alualizacao_cliente, valida_criacao_cliente } from "../utils/Sch
 //   }));
 // },
 
+/* Arrumar - Refatorar */
 export async function login_cliente(request: Request, response: Response, next: NextFunction) {
   const { email, senha } = request.body;
-  // console.log("senha => ", senha);
-  // console.log("email => ", email);
 
   let existingUser: any;
   const clienteRepository = getRepository(Cliente);
 
   try {
     existingUser = await clienteRepository.findOne({ email: request.body.email });
-    // console.log("achou o email");
-    // console.log("existingUser => ", existingUser);
   } catch (error) {
     return response.status(500).json({ 
       message: LOGIN_INVALIDO,
@@ -73,7 +70,10 @@ export async function login_cliente(request: Request, response: Response, next: 
  */
 export async function listar_clientes(request: Request, response: Response, next: NextFunction) {
   const clienteRepository = getRepository(Cliente);
-  const cliente = await clienteRepository.find();
+  const { id } = request.params;
+  const cliente = await clienteRepository.find({
+    where: { empresaId: id },
+  });
   return response.json(cliente);
 }
 
@@ -90,6 +90,7 @@ export async function busca_cliente(request: Request, response: Response, next: 
 /**
  * Cadastra um cliente
  */
+/* Arrumar - Refatorar */
 export async function criar_cliente(request: Request, response: Response, next: NextFunction) {
   // const { nome, email, senha, rua, numero, bairro, cidade, estado, cep,
   //   telefone, data_cadastro, data_modificacao_cadastro } = request.body;
@@ -112,6 +113,7 @@ export async function criar_cliente(request: Request, response: Response, next: 
     telefone: request.body.telefone,
     data_cadastro: request.body.data_cadastro,
     data_modificacao_cadastro: request.body.data_modificacao_cadastro,
+    empresaId: request.body.empresaId,
   }, { abortEarly: false });
 
   const cliente = clienteRepository.create({
@@ -127,6 +129,7 @@ export async function criar_cliente(request: Request, response: Response, next: 
     telefone: request.body.telefone,
     data_cadastro: request.body.data_cadastro,
     data_modificacao_cadastro: request.body.data_modificacao_cadastro,
+    empresaId: request.body.empresaId,
   });
   await clienteRepository.save(cliente);
 

@@ -1,8 +1,9 @@
 import { Entity, Column, ManyToOne, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from "typeorm";
 import { Imagem } from "./Imagem";
 import { Ingrediente } from "./Ingrediente";
+import { PedidoOpcionalAdicionado } from "./PedidoOpcionalAdicionado";
 import { PedidoRefeicao } from "./PedidoRefeicao";
-import Usuario from "./Usuario";
+import Empresa from "./Empresa";
 
 /* Ver se vai mudar o nome de 'Refeicao' para 'Produto' */
 @Entity('refeicao')
@@ -41,7 +42,7 @@ export default class Refeicao extends BaseEntity {
   unidade_quantidade: string; // unidade, ml, l, mg, g, kg
 
   @Column()
-  tipo: string; // ('comida' e 'bebida')
+  tipo_produto: string; // ('comida' e 'bebida')
 
   /* 1 refeicao com 1 ou mais imagens */
   @OneToMany(() => Imagem, imagem => imagem.refeicao, {
@@ -50,12 +51,12 @@ export default class Refeicao extends BaseEntity {
   imagens: Imagem[];
 
   /* muitas refeicoes cadastradas por 1 usuario  */
-  @ManyToOne(() => Usuario, (usuario) => usuario.refeicoes)
-  @JoinColumn({ name: 'usuarioId' })
-  usuario: Usuario;
+  @ManyToOne(() => Empresa, (empresa) => empresa.refeicoes)
+  @JoinColumn({ name: 'empresaId' })
+  empresa: Empresa;
 
   @Column({ type: 'integer', unsigned: true })
-  usuarioId: number;
+  empresaId: number;
 
   /* 1 refeicao com 1 ou mais ingredientes */
   /* Ver se vai ser opcional */
@@ -64,16 +65,16 @@ export default class Refeicao extends BaseEntity {
   })
   ingredientes: Ingrediente[];
 
-  /* 1 refeicao do pedido pode ter nenhum ou 1 ou mais opcionais */
-  /* Ver se vai ser opcional */
-  /* Ver se vai ser cadastrado no cadastro da refeicao */
-  // @OneToMany(() => PedidoOpcionalAdicionado, opcional => opcional.pedido_refeicao, {
-  //   cascade: ['insert']
-  // })
-  // lista_opcionais: PedidoOpcionalAdicionado[];
-
   /* Arrumar */
   /* Ver se vai renomear de 'PedidoRefeicao' para 'PedidoItem' ou 'PedidoProduto' */
   @OneToOne(() => PedidoRefeicao, (pedido_refeicao) => pedido_refeicao.refeicao)
   pedido_refeicao: PedidoRefeicao;
+  
+  /* 1 refeicao do pedido pode ter nenhum ou 1 ou mais opcionais */
+  /* Ver se vai ser opcional */
+  /* Ver se vai ser cadastrado no cadastro da refeicao */
+  @OneToMany(() => PedidoOpcionalAdicionado, opcional => opcional.pedido_refeicao, {
+    cascade: ['insert']
+  })
+  lista_opcionais: PedidoOpcionalAdicionado[];
 }

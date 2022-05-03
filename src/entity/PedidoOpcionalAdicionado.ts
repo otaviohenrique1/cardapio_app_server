@@ -1,5 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PedidoRefeicao } from "./PedidoRefeicao";
+import Refeicao from "./Refeicao";
 
 @Entity()
 export class PedidoOpcionalAdicionado extends BaseEntity {
@@ -19,4 +20,12 @@ export class PedidoOpcionalAdicionado extends BaseEntity {
 
   @Column({ type: 'integer', unsigned: true })
   pedidoRefeicaoId: number;
+
+  /* muitos opcionais em 1 refeicao */
+  @ManyToOne(() => Refeicao, refeicao => refeicao.lista_opcionais)
+  @JoinColumn({ name: 'reefeicaoId' })
+  refeicao: Refeicao;
+
+  @Column({ type: 'integer', unsigned: true })
+  refeicaoId: number;
 }

@@ -18,7 +18,23 @@ export async function listar_refeicoes(request: Request, response: Response, nex
   const { id } = request.params;
   const refeicaoRepository = getRepository(Refeicao);
   const refeicao = await refeicaoRepository.find({
-    where: { usuarioId: id },
+    where: { empresaId: id },
+    relations: ['imagens', 'ingredientes'],
+  });
+  return response.json(refeicaoView.renderMany(refeicao));
+}
+
+/**
+ * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo e se o valor da coluna 'ativo' for true
+ */
+ export async function listar_refeicoes_ativas(request: Request, response: Response, next: NextFunction) {
+  const { id } = request.params;
+  const refeicaoRepository = getRepository(Refeicao);
+  const refeicao = await refeicaoRepository.find({
+    where: { 
+      empresaId: id,
+      ativo: true
+    },
     relations: ['imagens', 'ingredientes'],
   });
   return response.json(refeicaoView.renderMany(refeicao));
@@ -40,7 +56,8 @@ export async function busca_refeicao(request: Request, response: Response, next:
  * Cadastrada uma refeicao
  */
 export async function criar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro, ingredientes, usuario_id } = request.body;
+  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro,
+    ingredientes, quantidade, unidade_quantidade, tipo_produto, empresa_id } = request.body;
 
   const refeicaoRepository = getRepository(Refeicao);
 
@@ -51,13 +68,10 @@ export async function criar_refeicao(request: Request, response: Response, next:
 
   const ingredientes_lista = JSON.parse(ingredientes);
 
-  // console.log("ativo => ", ativo);
-
   const data = {
-    nome, preco, descricao, ativo,
-    data_cadastro, data_modificacao_cadastro, imagens,
-    ingredientes: ingredientes_lista,
-    usuarioId: usuario_id
+    nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro,
+    imagens, ingredientes: ingredientes_lista, quantidade, unidade_quantidade,
+    tipo_produto, empresaId: empresa_id
   };
 
   await valida_criacao_refeicao.validate(data, { abortEarly: false });
@@ -107,7 +121,7 @@ interface FotoType {
  * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
  */
 export async function atualizar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { id, nome, preco, descricao, ativo, imagens_removidas } = request.body;
+  const { id, nome, preco, descricao, ativo, imagens_removidas, quantidade, unidade_quantidade, tipo_produto } = request.body;
   const refeicaoRepository = getRepository(Refeicao);
 
   /* Testar */
@@ -137,7 +151,8 @@ export async function atualizar_refeicao(request: Request, response: Response, n
     return { nome, quantidade };
   });
 
-  const data = { nome, preco, ingredientes, ativo, descricao, imagens };
+  const data = { nome, preco, ingredientes, ativo, descricao,
+    imagens, quantidade, unidade_quantidade, tipo_produto };
 
   await valida_alualizacao_refeicao.validate(data, { abortEarly: false });
   const refeicao = await refeicaoRepository.update(id, data);

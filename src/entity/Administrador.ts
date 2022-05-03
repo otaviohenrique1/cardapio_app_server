@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Empresa from "./Empresa";
 
 @Entity('administrador')
 export class Administrador extends BaseEntity {
@@ -23,4 +24,10 @@ export class Administrador extends BaseEntity {
 
   @Column()
   data_modificacao_cadastro: Date;
+
+  /* 1 administrador para muitas empresas cadastradas */
+  @OneToMany(() => Empresa, empresa => empresa.administrador, {
+    cascade: ['insert', 'update']
+  })
+  empresas: Empresa[];
 }
