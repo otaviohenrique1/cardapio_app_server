@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColu
 import { PedidoRefeicao } from "./PedidoRefeicao";
 import Refeicao from "./Refeicao";
 
-@Entity()
+@Entity('pedido_opcional_adicionado')
 export class PedidoOpcionalAdicionado extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
