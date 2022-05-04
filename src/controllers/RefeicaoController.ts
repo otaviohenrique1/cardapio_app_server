@@ -11,6 +11,11 @@ interface IngredienteTypes {
   quantidade: number;
 }
 
+interface IngredienteOpcionalTypes {
+  nome: string;
+  preco: number;
+}
+
 /**
  * Listar todas as refeicoes cadastradas pelo usuario, usando o id do mesmo
  */
@@ -123,7 +128,8 @@ interface FotoType {
  * Atualiza os dados de uma refeicao, usando o id da mesma para busca-la no banco de dados
  */
 export async function atualizar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { id, nome, preco, descricao, ativo, imagens_removidas, quantidade, unidade_quantidade, tipo_produto } = request.body;
+  const { id, nome, preco, descricao, ativo, imagens_removidas,
+    quantidade, unidade_quantidade, tipo_produto } = request.body;
   const refeicaoRepository = getRepository(Refeicao);
 
   /* Testar */
@@ -153,8 +159,14 @@ export async function atualizar_refeicao(request: Request, response: Response, n
     return { nome, quantidade };
   });
 
+  const requestIngredientesOpcionais = request.body.ingredientes_opcionais as IngredienteOpcionalTypes[];
+  const lista_opcionais = requestIngredientesOpcionais.map((ingrediente_opcional) => {
+    const { nome, preco } = ingrediente_opcional;
+    return { nome, preco };
+  });
+
   const data = { nome, preco, ingredientes, ativo, descricao,
-    imagens, quantidade, unidade_quantidade, tipo_produto };
+    imagens, quantidade, unidade_quantidade, tipo_produto, lista_opcionais };
 
   await valida_alualizacao_refeicao.validate(data, { abortEarly: false });
   const refeicao = await refeicaoRepository.update(id, data);
