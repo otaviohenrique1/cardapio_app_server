@@ -74,7 +74,7 @@ export default class Refeicao extends BaseEntity {
   /* Ver se vai ser opcional */
   /* Ver se vai ser cadastrado no cadastro da refeicao */
   @OneToMany(() => PedidoOpcionalAdicionado, opcional => opcional.pedido_refeicao, {
-    cascade: ['insert']
+    cascade: ['insert', 'update', 'remove']
   })
   lista_opcionais: PedidoOpcionalAdicionado[];
 }
