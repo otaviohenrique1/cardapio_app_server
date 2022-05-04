@@ -56,8 +56,8 @@ export async function busca_refeicao(request: Request, response: Response, next:
  * Cadastrada uma refeicao
  */
 export async function criar_refeicao(request: Request, response: Response, next: NextFunction) {
-  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro,
-    ingredientes, quantidade, unidade_quantidade, tipo_produto, empresa_id } = request.body;
+  const { nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro, ingredientes,
+    quantidade, unidade_quantidade, tipo_produto, ingredientes_opcionais, empresa_id } = request.body;
 
   const refeicaoRepository = getRepository(Refeicao);
 
@@ -67,11 +67,13 @@ export async function criar_refeicao(request: Request, response: Response, next:
   });
 
   const ingredientes_lista = JSON.parse(ingredientes);
+  
+  const lista_opcionais = JSON.parse(ingredientes_opcionais);
 
   const data = {
-    nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro,
-    imagens, ingredientes: ingredientes_lista, quantidade, unidade_quantidade,
-    tipo_produto, empresaId: empresa_id
+    nome, preco, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens,
+    ingredientes: ingredientes_lista, ingredientes_opcionais: lista_opcionais,
+    quantidade, unidade_quantidade, tipo_produto, empresaId: empresa_id
   };
 
   await valida_criacao_refeicao.validate(data, { abortEarly: false });
