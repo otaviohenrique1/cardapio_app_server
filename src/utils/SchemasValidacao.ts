@@ -272,6 +272,9 @@ export const valida_alualizacao_refeicao = Yup
     ingredientes: valida_lista_ingredientes,
     descricao: valida_descricao,
     ativo: valida_ativo,
+    quantidade: valida_quantidade,
+    quantidade_unidade: valida_quantidade_unidade,
+    tipo_produto: valida_tipo_produto,
     imagens: valida_imagens,
     data_modificacao_cadastro: valida_data_modificacao_cadastro,
   });
