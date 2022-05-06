@@ -5,7 +5,6 @@ import { RefeicaoTypes } from "../utils/interfaces_types";
 
 const NOME_TABELA = 'refeicao';
 
-
 export class createRefeicao1651795175311 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
