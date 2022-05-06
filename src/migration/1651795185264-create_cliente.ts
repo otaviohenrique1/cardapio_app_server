@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { getConnection } from "typeorm";
 import { Cliente } from "../entity/Cliente";
-import { coluna_bairro, coluna_cep, coluna_cidade, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_email, coluna_estado, coluna_nome, coluna_numero, coluna_primary_key, coluna_rua, coluna_senha, coluna_telefone, if_table_not_exist } from "../utils/constantes_migration";
+import { coluna_bairro, coluna_cep, coluna_cidade, coluna_codigo, coluna_data_cadastro, coluna_data_modificacao_cadastro, coluna_email, coluna_empresaId, coluna_estado, coluna_nome, coluna_numero, coluna_primary_key, coluna_rua, coluna_senha, coluna_telefone, if_table_not_exist } from "../utils/constantes_migration";
 import { FormatadorCrypto } from "../utils/FormatadorCrypto";
 import { ClienteTypes } from "../utils/interfaces_types";
 
@@ -27,6 +27,7 @@ export class createCliente1651795185264 implements MigrationInterface {
         coluna_codigo,
         coluna_data_cadastro,
         coluna_data_modificacao_cadastro,
+        coluna_empresaId,
       ]
     }), if_table_not_exist);
 
