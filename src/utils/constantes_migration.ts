@@ -49,8 +49,8 @@ export const coluna_status_cadastro = CriaColunaTabela({
   isNullable: false,
 });
 
-export const coluna_ingrediente_removivel = CriaColunaTabela({
-  name: 'ingrediente_removivel',
+export const coluna_removivel = CriaColunaTabela({
+  name: 'removivel',
   type: 'boolean',
   isNullable: false,
 });
