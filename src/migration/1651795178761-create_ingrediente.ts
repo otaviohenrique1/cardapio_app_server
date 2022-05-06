@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { getConnection } from "typeorm";
 import { Ingrediente } from "../entity/Ingrediente";
-import { coluna_ingrediente_removivel, coluna_nome, coluna_primary_key, coluna_quantidade, coluna_refeicaoId, coluna_unidade_quantidade, if_table_not_exist } from "../utils/constantes_migration";
+import { coluna_removivel, coluna_nome, coluna_primary_key, coluna_quantidade, coluna_refeicaoId, coluna_unidade_quantidade, if_table_not_exist } from "../utils/constantes_migration";
 import { IngredienteTypes } from "../utils/interfaces_types";
 
 const NOME_TABELA = 'ingrediente';
@@ -16,7 +16,7 @@ export class createIngrediente1651795178761 implements MigrationInterface {
         coluna_nome,
         coluna_quantidade,
         coluna_unidade_quantidade,
-        coluna_ingrediente_removivel,
+        coluna_removivel,
         coluna_refeicaoId,
       ],
     }), if_table_not_exist);
