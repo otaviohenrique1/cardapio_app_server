@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, OneToMany, Generated, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from "typeorm";
 import { Imagem } from "./Imagem";
 import { Ingrediente } from "./Ingrediente";
-import { PedidoOpcionalAdicionado } from "./PedidoOpcionalAdicionado";
-import { PedidoRefeicao } from "./PedidoRefeicao";
+import { IngredienteOpcional } from "./IngredientesOpcionais";
+import { PedidoItem } from "./PedidoItem";
 import Empresa from "./Empresa";
 
 /* Ver se vai mudar o nome de 'Refeicao' para 'Produto' */
@@ -67,14 +67,14 @@ export default class Refeicao extends BaseEntity {
 
   /* Arrumar */
   /* Ver se vai renomear de 'PedidoRefeicao' para 'PedidoItem' ou 'PedidoProduto' */
-  @OneToOne(() => PedidoRefeicao, (pedido_refeicao) => pedido_refeicao.refeicao)
-  pedido_refeicao: PedidoRefeicao;
+  @OneToOne(() => PedidoItem, (pedido_item) => pedido_item.refeicao)
+  pedido_item: PedidoItem;
   
   /* 1 refeicao do pedido pode ter nenhum ou 1 ou mais opcionais */
   /* Ver se vai ser opcional */
   /* Ver se vai ser cadastrado no cadastro da refeicao */
-  @OneToMany(() => PedidoOpcionalAdicionado, opcional => opcional.pedido_refeicao, {
+  @OneToMany(() => IngredienteOpcional, opcional => opcional.pedido_refeicao, {
     cascade: ['insert', 'update', 'remove']
   })
-  lista_opcionais: PedidoOpcionalAdicionado[];
+  lista_opcionais: IngredienteOpcional[];
 }

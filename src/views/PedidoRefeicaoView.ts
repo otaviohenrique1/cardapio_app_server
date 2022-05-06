@@ -1,17 +1,17 @@
-import { PedidoRefeicao } from "../entity/PedidoRefeicao";
+import { PedidoItem } from "../entity/PedidoItem";
 
 export default {
-  render(pedido_refeicao: PedidoRefeicao) {
+  render(pedido_item: PedidoItem) {
     const {
       id, refeicaoId, quantidade, pedidoId
-    } = pedido_refeicao;
+    } = pedido_item;
 
     return {
       id, refeicaoId, quantidade, pedidoId
     };
   },
 
-  renderMany(pedido_refeicoes: PedidoRefeicao[]) {
-    return pedido_refeicoes.map(pedido_refeicao => this.render(pedido_refeicao));
+  renderMany(lista_refeicoes: PedidoItem[]) {
+    return lista_refeicoes.map(pedido_item => this.render(pedido_item));
   }
 };

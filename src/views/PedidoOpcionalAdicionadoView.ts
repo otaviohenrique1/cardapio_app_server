@@ -1,7 +1,7 @@
-import { PedidoOpcionalAdicionado } from "../entity/PedidoOpcionalAdicionado";
+import { IngredienteOpcional } from "../entity/IngredientesOpcionais";
 
 export default {
-  render(pedido_opcional_adicionado: PedidoOpcionalAdicionado) {
+  render(pedido_opcional_adicionado: IngredienteOpcional) {
     const {
       id, nome, preco, pedidoRefeicaoId, refeicaoId
     } = pedido_opcional_adicionado;
@@ -11,7 +11,7 @@ export default {
     };
   },
 
-  renderMany(pedido_opcionais_adicionados: PedidoOpcionalAdicionado[]) {
+  renderMany(pedido_opcionais_adicionados: IngredienteOpcional[]) {
     return pedido_opcionais_adicionados.map(pedido_opcional_adicionado => this.render(pedido_opcional_adicionado));
   }
 };

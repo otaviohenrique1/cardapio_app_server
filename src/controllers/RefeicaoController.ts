@@ -6,6 +6,7 @@ import refeicaoView from "../views/RefeicaoView";
 import { Imagem } from "../entity/Imagem";
 import fs from "fs";
 import path from "path";
+
 interface IngredienteTypes {
   nome: string;
   quantidade: number;
@@ -24,7 +25,7 @@ export async function listar_refeicoes(request: Request, response: Response, nex
   const refeicaoRepository = getRepository(Refeicao);
   const refeicao = await refeicaoRepository.find({
     where: { empresaId: id },
-    relations: ['imagens', 'ingredientes', 'pedido_opcional_adicionado'],
+    relations: ['imagens', 'ingredientes', 'lista_opcionais'],
   });
   return response.json(refeicaoView.renderMany(refeicao));
 }
@@ -40,7 +41,7 @@ export async function listar_refeicoes(request: Request, response: Response, nex
       empresaId: id,
       ativo: true
     },
-    relations: ['imagens', 'ingredientes', 'pedido_opcional_adicionado'],
+    relations: ['imagens', 'ingredientes', 'lista_opcionais'],
   });
   return response.json(refeicaoView.renderMany(refeicao));
 }
@@ -52,7 +53,7 @@ export async function busca_refeicao(request: Request, response: Response, next:
   const { id } = request.params;
   const refeicaoRepository = getRepository(Refeicao);
   const refeicao = await refeicaoRepository.findOneOrFail(id,
-    { relations: ['imagens', 'ingredientes', 'pedido_opcional_adicionado'] }
+    { relations: ['imagens', 'ingredientes', 'lista_opcionais'] }
   );
   return response.json(refeicaoView.render(refeicao));
 }

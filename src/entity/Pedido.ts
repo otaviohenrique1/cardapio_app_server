@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, Generated, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Cliente } from "./Cliente";
-import { PedidoRefeicao } from "./PedidoRefeicao";
+import { PedidoItem } from "./PedidoItem";
 
 @Entity('pedido')
 export class Pedido extends BaseEntity {
@@ -36,9 +36,9 @@ export class Pedido extends BaseEntity {
   @Column({ type: 'integer', unsigned: true })
   clienteId: number;
 
-  /* 1 pedido com 1 ou mais refeicoes */
-  @OneToMany(() => PedidoRefeicao, refeicao => refeicao.pedido, {
+  /* 1 pedido com 1 ou mais itens */
+  @OneToMany(() => PedidoItem, item => item.pedido, {
     cascade: ['insert']
   })
-  lista_refeicoes: PedidoRefeicao[];
+  lista_refeicoes: PedidoItem[];
 }
