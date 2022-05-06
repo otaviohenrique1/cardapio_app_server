@@ -195,7 +195,7 @@ export const coluna_refeicaoId = CriaColunaTabela({
 });
 
 export const coluna_empresaId = CriaColunaTabela({
-  name: 'usuarioId',
+  name: 'empresaId',
   type: 'integer',
   unsigned: true,
 });
