@@ -27,16 +27,16 @@ export class createRefeicao1651795175311 implements MigrationInterface {
     }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Refeicao)
-      .values([
-        refeicao_1, refeicao_2, refeicao_3,
-        refeicao_4, refeicao_5, refeicao_6,
-        refeicao_7, refeicao_8, refeicao_9
-      ])
-      .execute();
+    // await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(Refeicao)
+    //   .values([
+    //     refeicao_1, refeicao_2, refeicao_3,
+    //     refeicao_4, refeicao_5, refeicao_6,
+    //     refeicao_7, refeicao_8, refeicao_9
+    //   ])
+    //   .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

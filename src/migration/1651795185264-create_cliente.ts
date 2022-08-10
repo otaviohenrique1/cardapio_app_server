@@ -32,19 +32,19 @@ export class createCliente1651795185264 implements MigrationInterface {
     }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Cliente)
-      .values([
-        cliente_1,
-        cliente_2,
-        cliente_3,
-        cliente_4,
-        cliente_5,
-        cliente_6
-      ])
-      .execute();
+    // await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(Cliente)
+    //   .values([
+    //     cliente_1,
+    //     cliente_2,
+    //     cliente_3,
+    //     cliente_4,
+    //     cliente_5,
+    //     cliente_6
+    //   ])
+    //   .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

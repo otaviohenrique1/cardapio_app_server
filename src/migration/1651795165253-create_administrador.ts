@@ -23,14 +23,14 @@ export class createAdministrador1651795165253 implements MigrationInterface {
       ],
     }), if_table_not_exist);
 
-    await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(Administrador)
-      .values([
-        administrador_1
-      ])
-      .execute();
+    // await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(Administrador)
+    //   .values([
+    //     administrador_1
+    //   ])
+    //   .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
