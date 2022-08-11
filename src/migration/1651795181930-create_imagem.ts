@@ -19,22 +19,22 @@ export class createImagem1651795181930 implements MigrationInterface {
     }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    // await getConnection()
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Imagem)
-    //   .values([
-    //     imagem_1_refeicao_1, imagem_2_refeicao_1, imagem_3_refeicao_1,
-    //     imagem_4_refeicao_2, imagem_5_refeicao_2, imagem_6_refeicao_2,
-    //     imagem_7_refeicao_3, imagem_8_refeicao_3, imagem_9_refeicao_3,
-    //     imagem_10_refeicao_4, imagem_11_refeicao_4, imagem_12_refeicao_4,
-    //     imagem_13_refeicao_5, imagem_14_refeicao_5, imagem_15_refeicao_5,
-    //     imagem_16_refeicao_6, imagem_17_refeicao_6, imagem_18_refeicao_6,
-    //     imagem_19_refeicao_7, imagem_20_refeicao_7, imagem_21_refeicao_7,
-    //     imagem_22_refeicao_8, imagem_23_refeicao_8, imagem_24_refeicao_8,
-    //     imagem_25_refeicao_9, imagem_26_refeicao_9, imagem_27_refeicao_9
-    //   ])
-    //   .execute();
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Imagem)
+      .values([
+        imagem_1_refeicao_1, imagem_2_refeicao_1, imagem_3_refeicao_1,
+        imagem_4_refeicao_2, imagem_5_refeicao_2, imagem_6_refeicao_2,
+        imagem_7_refeicao_3, imagem_8_refeicao_3, imagem_9_refeicao_3,
+        imagem_10_refeicao_4, imagem_11_refeicao_4, imagem_12_refeicao_4,
+        imagem_13_refeicao_5, imagem_14_refeicao_5, imagem_15_refeicao_5,
+        imagem_16_refeicao_6, imagem_17_refeicao_6, imagem_18_refeicao_6,
+        imagem_19_refeicao_7, imagem_20_refeicao_7, imagem_21_refeicao_7,
+        imagem_22_refeicao_8, imagem_23_refeicao_8, imagem_24_refeicao_8,
+        imagem_25_refeicao_9, imagem_26_refeicao_9, imagem_27_refeicao_9
+      ])
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

@@ -20,7 +20,7 @@ export default class Empresa extends BaseEntity {
 
   @Column()
   data_modificacao_cadastro: Date;
-  
+
   @Column()
   email: string;
 

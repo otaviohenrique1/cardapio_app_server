@@ -26,17 +26,17 @@ export class createEmpresa1651795171248 implements MigrationInterface {
     }), if_table_not_exist);
 
     /* Seeder - Retirar quando for para producao */
-    // await getConnection()
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Empresa)
-    //   .values([
-    //     empresa_1,
-    //     empresa_2,
-    //     empresa_3,
-    //     empresa_4
-    //   ])
-    //   .execute();
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Empresa)
+      .values([
+        empresa_1,
+        empresa_2,
+        empresa_3,
+        empresa_4
+      ])
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
