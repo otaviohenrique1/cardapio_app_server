@@ -5,7 +5,7 @@ const NOME_TABELA = 'pedido_opcional_adicionado';
 
 export class createPedidoOpcionaisAdicionados1651795202087 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
+    await queryRunner.dropTable(NOME_TABELA, if_table_not_exist);
     await queryRunner.createTable(new Table({
       name: NOME_TABELA,
       columns: [
